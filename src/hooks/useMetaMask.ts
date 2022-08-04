@@ -6,12 +6,15 @@ interface MetaMaskData {
   isConnected: boolean
   hasMetaMask: boolean
   connect: () => void
+  signer: ethers.providers.JsonRpcSigner | null
+  account: string | null
 }
 
 const useMetaMask = (): MetaMaskData => {
   const [isConnected, setIsConnected] = useState(false)
   const [hasMetaMask, setHasMetaMask] = useState(false)
   const [error, setError] = useState(null)
+  const [account, setAccount] = useState<string | null>(null)
   const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner | null>(
     null
   )
@@ -25,10 +28,13 @@ const useMetaMask = (): MetaMaskData => {
   const connect = async function connect() {
     if (typeof window.ethereum !== "undefined") {
       try {
-        await ethereum.request({ method: "eth_requestAccounts" })
+        const [account] = await window.ethereum.request({
+          method: "eth_requestAccounts"
+        })
         setIsConnected(true)
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         setSigner(provider.getSigner())
+        setAccount(account)
       } catch (e: any) {
         setError(e.messages)
       }
@@ -41,7 +47,9 @@ const useMetaMask = (): MetaMaskData => {
     error,
     connect,
     hasMetaMask,
-    isConnected
+    isConnected,
+    signer,
+    account
   }
 }
 
