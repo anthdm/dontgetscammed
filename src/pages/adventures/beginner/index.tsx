@@ -2,36 +2,19 @@ import Spacer from "components/Spacer"
 import type { NextPage } from "next"
 import useMetaMask from "hooks/useMetaMask"
 import Button from "components/Button"
-import Input from "components/Input"
-import { useForm } from "react-hook-form"
 import PageTitle from "components/PageTitle"
 import { useRouter } from "next/router"
-import useAddBalance from "hooks/useAddBalance"
 import { useEffect } from "react"
 import Card from "components/Card"
 import PageP from "components/PageP"
-import MetaMaskOnboarding from "@metamask/onboarding"
+import PageContent from "components/PageContent"
 
 const Adventure: NextPage = () => {
   const router = useRouter()
-  const { tx, addBalance, error } = useAddBalance()
-  const { account, connectWallet, walletInstalled, isConnected } = useMetaMask()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm()
-
-  // useEffect(() => {
-  //   if (tx) {
-  //     router.push("/adventures/beginner/1")
-  //   }
-  // }, [tx])
+  const { connectWallet, walletInstalled, isConnected } = useMetaMask()
 
   useEffect(() => {
     if (!isConnected) {
-      console.log(isConnected)
-      console.log(walletInstalled)
       connectWallet()
     }
   }, [])
@@ -66,41 +49,7 @@ const Adventure: NextPage = () => {
           </p>
         </Card>
         <Spacer />
-        <Button onClick={handleSubmit(onContinue)}>Continue</Button>
-        {/* <p className="text-lg">
-          Task: find the address of you wallet and enter it in the input below
-        </p> */}
-        <Spacer />
-        {/* <div className="w-full">
-          <Input
-            {...register("address", {
-              validate: equalAddress
-            })}
-            placeholder="enter your wallet address"
-          />
-        </div> */}
-        {/* <Spacer />
-        <Button onClick={handleSubmit(onSubmitAddress)}>Continue</Button>
-        <Spacer /> */}
-        {error && (
-          <Card error={true}>
-            <h3 className="text-xl mb-4 font-bold">Whoops!</h3>
-            <p className="text-lg">
-              An unexpected error occured. Please contact @anthdm for further
-              support.
-            </p>
-          </Card>
-        )}
-        {errors.address && (
-          <Card error={true}>
-            <h3 className="text-xl mb-4 font-bold">Whoops!</h3>
-            <p className="text-lg">
-              The address you entered does not seem to match. Maybe try to open
-              the MetaMask browser extension? You can find it in the top right
-              corner.
-            </p>
-          </Card>
-        )}
+        <Button onClick={onContinue}>Continue</Button>
       </>
     )
   }
@@ -114,17 +63,8 @@ const Adventure: NextPage = () => {
     )
   }
 
-  const equalAddress = (address: string): boolean => {
-    return address.toLowerCase() === account
-  }
-
-  const onSubmitAddress = (data: any): void => {
-    const { address } = data
-    addBalance(address)
-  }
-
   return (
-    <div className="w-2/3">
+    <PageContent>
       <PageTitle>Create your wallet</PageTitle>
       <PageP>
         To enter the world of cryptocurrencies, you must have a wallet first.
@@ -135,7 +75,7 @@ const Adventure: NextPage = () => {
       {!walletInstalled && renderMetaMaskNotInstalled()}
       {!isConnected && walletInstalled && renderMetaMaskNotConnected()}
       {isConnected && renderMetaMaskConnected()}
-    </div>
+    </PageContent>
   )
 }
 

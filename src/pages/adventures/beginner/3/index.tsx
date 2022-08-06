@@ -1,6 +1,7 @@
 import Button from "components/Button"
 import Card from "components/Card"
 import Input from "components/Input"
+import PageContent from "components/PageContent"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
 import useMetaMask from "hooks/useMetaMask"
@@ -11,7 +12,7 @@ import { useForm } from "react-hook-form"
 
 const Page: NextPage = () => {
   const router = useRouter()
-  const { balance, getBalance, connect, isConnected } = useMetaMask()
+  const { balance, getBalance, connectWallet, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
@@ -20,54 +21,60 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      connect()
+      connectWallet()
     } else {
       getBalance()
     }
-  })
+  }, [isConnected])
 
   const onSubmitBalance = (data: any): void => {
-    router.push("/adventures/beginner/3")
+    router.push("/adventures/beginner/4")
   }
 
   const equalBalance = (amount: string): boolean => {
+    console.log("balance")
+    console.log(balance)
+    console.log("amount")
+    console.log(amount)
     return amount === balance
   }
 
   return (
-    <div className="w-2/3">
+    <PageContent>
       <PageTitle>Account balance</PageTitle>
       <p className="text-lg text-neutral-400">
-        In order to sent Ether you will need to have some balance on your
-        wallet. Luckely we got you covered. We added some balance to your
-        account. Go check it out!
+        To send Ether, you must have a balance in your wallet. Luckily we got
+        you covered. We added some balance to your account. Could you go check
+        it out?
       </p>
       <Spacer />
-      <p className="text-lg mb-8">
+      <p className="text-lg mb-8 text-blue-500">
         Task: check the balance of your account and enter it in the input field
         below.
       </p>
-      <div className="flex flex-row space-x-4">
-        <div className="w-2/3">
-          <Input
-            {...register("balance", {
-              required: true,
-              validate: equalBalance
-            })}
-            placeholder="enter your account balance"
-          />
-        </div>
-        <Button onClick={handleSubmit(onSubmitBalance)}>Submit</Button>
+      <div className="w-full">
+        <Input
+          {...register("balance", {
+            required: true,
+            validate: equalBalance
+          })}
+          placeholder="enter your account balance"
+        />
       </div>
+      <Spacer />
       {errors.balance && (
-        <Card error={true} className="mt-6">
-          <h3 className="text-xl mb-4 font-bold ">Whoops!</h3>
-          <p className="text-lg">
-            It seems that the balance you've entered does not match.
-          </p>
-        </Card>
+        <>
+          <Card error={true} className="mt-6">
+            <h3 className="text-xl mb-4 font-bold ">Whoops!</h3>
+            <p className="text-lg">
+              It seems that the balance you've entered does not match.
+            </p>
+          </Card>
+          <Spacer />
+        </>
       )}
-    </div>
+      <Button onClick={handleSubmit(onSubmitBalance)}>Continue</Button>
+    </PageContent>
   )
 }
 

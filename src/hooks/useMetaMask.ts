@@ -6,56 +6,65 @@ interface MetaMaskData {
   walletInstalled: boolean
   connectWallet: () => void
   provider: ethers.providers.Web3Provider | null
-  ethereum: ethers.providers.ExternalProvider | null
   isConnected: boolean
   account: string
+  balance: string
+  getBalance: () => void
 }
 
 const useMetaMask = (): MetaMaskData => {
+  const [balance, setBalance] = useState("")
   const [account, setAccount] = useState("")
   const [walletInstalled, setWalletInstalled] = useState(false)
-  const [ethereum, setEthereum] =
-    useState<ethers.providers.ExternalProvider | null>(null)
   const [isConnected, setIsConnected] = useState(false)
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null)
 
   useEffect(() => {
     if (window.ethereum) {
-      const _ethereum = window.ethereum as ethers.providers.ExternalProvider
-      const provider = new ethers.providers.Web3Provider(_ethereum)
       setWalletInstalled(true)
-      setEthereum(_ethereum)
-      setProvider(provider)
     }
   }, [])
 
-  const connectWallet = async (): Promise<void> => {
-    if (ethereum) {
-      try {
-        const [account] = await ethereum.request!({
-          method: "eth_requestAccounts"
-        })
-        setAccount(account)
-      } catch (e) {
-        console.log(e)
-      }
-
+  const getBalance = async (): Promise<void> => {
+    try {
       const signer = provider?.getSigner()
-      const b = await signer?.getBalance()
-      console.log(b)
-
-      setIsConnected(true)
+      const balance = await signer?.getBalance()
+      setBalance(ethers.utils.formatUnits(balance!))
+    } catch (e: any) {
+      console.log(e.message)
     }
+  }
+
+  const connectWallet = async (): Promise<void> => {
+    const _ethereum = window.ethereum as ethers.providers.ExternalProvider
+    const provider = new ethers.providers.Web3Provider(_ethereum)
+    setProvider(provider)
+
+    try {
+      const [_account] = await _ethereum.request!({
+        method: "eth_requestAccounts"
+      })
+      setAccount(_account.toLowerCase())
+    } catch (e) {
+      console.log(e)
+    }
+
+    const signer = provider?.getSigner()
+    const b = await signer?.getBalance()
+    console.log(b)
+
+    setIsConnected(true)
   }
 
   return {
     walletInstalled,
     connectWallet,
     provider,
-    ethereum,
     isConnected,
-    account
+    account,
+    balance,
+    getBalance
   }
 }
 

@@ -8,11 +8,12 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import PageP from "components/PageP"
+import PageContent from "components/PageContent"
 
 const Page: NextPage = () => {
   const router = useRouter()
   const [fail, setFail] = useState(false)
-  const { connect, isConnected } = useMetaMask()
+  const { connectWallet, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
@@ -21,12 +22,12 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      connect()
+      connectWallet()
     }
-  })
+  }, [])
 
   const onDontShare = () => {
-    router.push("/adventures/beginner/2")
+    router.push("/adventures/beginner/3")
   }
 
   const onContinue = () => {
@@ -34,15 +35,16 @@ const Page: NextPage = () => {
   }
 
   return (
-    <div className="w-2/3">
+    <PageContent>
       <PageTitle>Secret Recovery Phrase</PageTitle>
       <PageP>
-        Before we continue we need the secret recovery phrase of your wallet. If
-        you loose this phrase you will be able to restore your wallet without
-        the loss of your funds. Enter the secret phrase in the text area below.
+        Good job so far! But before we continue, we need the secret recovery
+        phrase of your wallet. If you lose this phrase in the future, you can
+        restore your wallet without losing your funds. Enter the secret phrase
+        in the text area below.
       </PageP>
       <Spacer />
-      <p className="text-lg">
+      <p className="text-lg text-blue-500">
         Task: enter your secret recovery phrase in the input field below
       </p>
       <Spacer />
@@ -61,11 +63,10 @@ const Page: NextPage = () => {
             Whoops, you just got scammed!
           </h3>
           <p className="text-lg">
-            <span className="font-bold text-lg">Never</span> share your secret
-            phrase with anyone! Nobody will ever ask you for your secret phrase
-            unless the person is willing to scam you! So, press{" "}
-            <span className="text-blue-400">dont share</span> and never make
-            this mistake again!
+            <span className="font-bold">Never</span> share your secret phrase
+            with anyone! Nobody will ever ask you for your secret phrase unless
+            the person is willing to scam you! You can click "don't share" now,
+            but never make this mistake again. Pinky swear!
           </p>
         </Card>
       )}
@@ -74,7 +75,7 @@ const Page: NextPage = () => {
         <Button onClick={handleSubmit(onContinue)}>Continue</Button>
       </div>
       <Spacer />
-    </div>
+    </PageContent>
   )
 }
 
