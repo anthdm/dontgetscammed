@@ -20,41 +20,34 @@ const useMetaMask = (): MetaMaskData => {
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null)
 
-  const detect = async (): Promise<void> => {
-    const _provider =
-      (await detectEthereumProvider()) as ethers.providers.ExternalProvider
-    if (_provider) {
-      const provider = new ethers.providers.Web3Provider(_provider)
+  useEffect(() => {
+    if (window.ethereum) {
+      const _ethereum = window.ethereum as ethers.providers.ExternalProvider
+      const provider = new ethers.providers.Web3Provider(_ethereum)
       setWalletInstalled(true)
-      setEthereum(_provider)
+      setEthereum(_ethereum)
       setProvider(provider)
     }
-  }
+  }, [])
 
   const connectWallet = async (): Promise<void> => {
-    if (!ethereum) {
-      return
+    if (ethereum) {
+      try {
+        const [account] = await ethereum.request!({
+          method: "eth_requestAccounts"
+        })
+        setAccount(account)
+      } catch (e) {
+        console.log(e)
+      }
+
+      const signer = provider?.getSigner()
+      const b = await signer?.getBalance()
+      console.log(b)
+
+      setIsConnected(true)
     }
-
-    try {
-      const [account] = await ethereum.request!({
-        method: "eth_requestAccounts"
-      })
-      setAccount(account)
-    } catch (e) {
-      console.log(e)
-    }
-
-    const signer = provider?.getSigner()
-    const b = await signer?.getBalance()
-    console.log(b)
-
-    setIsConnected(true)
   }
-
-  useEffect(() => {
-    detect()
-  }, [])
 
   return {
     walletInstalled,

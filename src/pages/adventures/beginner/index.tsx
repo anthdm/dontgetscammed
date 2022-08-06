@@ -13,21 +13,32 @@ import PageP from "components/PageP"
 import MetaMaskOnboarding from "@metamask/onboarding"
 
 const Adventure: NextPage = () => {
-  const onboarding = new MetaMaskOnboarding()
   const router = useRouter()
   const { tx, addBalance, error } = useAddBalance()
-  const { account, connect, isConnected, hasMetaMask } = useMetaMask()
+  const { account, connectWallet, walletInstalled, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
+  // useEffect(() => {
+  //   if (tx) {
+  //     router.push("/adventures/beginner/1")
+  //   }
+  // }, [tx])
+
   useEffect(() => {
-    if (tx) {
-      router.push("/adventures/beginner/1")
+    if (!isConnected) {
+      console.log(isConnected)
+      console.log(walletInstalled)
+      connectWallet()
     }
-  }, [tx])
+  }, [])
+
+  const onContinue = () => {
+    router.push("/adventures/beginner/1")
+  }
 
   const renderMetaMaskNotConnected = () => {
     return (
@@ -35,11 +46,11 @@ const Adventure: NextPage = () => {
         <h3 className="text-xl mb-4 font-bold">Connect your wallet</h3>
         <p className="text-lg">
           We have detected that you have Metamask installed, but it is not
-          connected yet. Click the button below to connected your wallet with
-          our application.
+          connected yet. Click the button below to connect your wallet with the
+          application.
         </p>
         <Spacer />
-        <Button onClick={connect}>Connect my wallet</Button>
+        <Button onClick={connectWallet}>Connect my wallet</Button>
       </Card>
     )
   }
@@ -50,27 +61,27 @@ const Adventure: NextPage = () => {
         <Card className="border-green-300 border">
           <h3 className="text-xl mb-4 font-bold">Sweet!</h3>
           <p className="text-lg">
-            You are now connected with your Metamask wallet. If you want to
-            receive money on your wallet you need to now the address.
+            You are now connected with your MetaMask wallet and ready to start
+            your adventure.
           </p>
         </Card>
         <Spacer />
-        <p className="text-lg">
+        <Button onClick={handleSubmit(onContinue)}>Continue</Button>
+        {/* <p className="text-lg">
           Task: find the address of you wallet and enter it in the input below
-        </p>
+        </p> */}
         <Spacer />
-        <div className="flex flex-row space-x-4">
-          <div className="w-2/3">
-            <Input
-              {...register("address", {
-                validate: equalAddress
-              })}
-              placeholder="enter your wallet address"
-            />
-          </div>
-          <Button onClick={handleSubmit(onSubmitAddress)}>Lets go</Button>
-        </div>
-        <Spacer />
+        {/* <div className="w-full">
+          <Input
+            {...register("address", {
+              validate: equalAddress
+            })}
+            placeholder="enter your wallet address"
+          />
+        </div> */}
+        {/* <Spacer />
+        <Button onClick={handleSubmit(onSubmitAddress)}>Continue</Button>
+        <Spacer /> */}
         {error && (
           <Card error={true}>
             <h3 className="text-xl mb-4 font-bold">Whoops!</h3>
@@ -116,16 +127,14 @@ const Adventure: NextPage = () => {
     <div className="w-2/3">
       <PageTitle>Create your wallet</PageTitle>
       <PageP>
-        Each crypto adventure starts with creating a new wallet. We will use one
-        of the most commonly used wallets for Ethereum; Metamask.
+        To enter the world of cryptocurrencies, you must have a wallet first.
+        Think about a wallet as a bank account, but decentralized. It will be
+        your bread and butter to interact with the blockchain network.
       </PageP>
       <Spacer />
-      <Button onClick={onboarding.startOnboarding}>
-        Start my onboarding process
-      </Button>
-      {/* {!hasMetaMask && renderMetaMaskNotInstalled()}
-      {!isConnected && hasMetaMask && renderMetaMaskNotConnected()}
-      {isConnected && renderMetaMaskConnected()} */}
+      {!walletInstalled && renderMetaMaskNotInstalled()}
+      {!isConnected && walletInstalled && renderMetaMaskNotConnected()}
+      {isConnected && renderMetaMaskConnected()}
     </div>
   )
 }
