@@ -13,7 +13,9 @@ module.exports = {
     },
     extend: {
       colors: {
-        "black-dimmed": "#18181a"
+        "black-normal": "#0d1117",
+        "black-dimmed": "#161b22",
+        muted: "#8b949e"
       }
     }
   },

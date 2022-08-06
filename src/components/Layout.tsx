@@ -7,12 +7,10 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <>
+    <div className="h-screen bg-black-normal px-8 flex-col justify-between">
       <Nav />
-      <div className="container text-white mx-auto min-h-screen max-h-full pt-10 pb-10">
-        {children}
-      </div>
-    </>
+      <div className="container text-white mx-auto pt-10 pb-10">{children}</div>
+    </div>
   )
 }
 

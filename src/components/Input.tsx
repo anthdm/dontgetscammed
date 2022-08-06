@@ -10,7 +10,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref as any}
         placeholder={placeholder}
-        className="rounded-xl py-3 px-4 w-full outline-none text-white bg-black-dimmed focus:outline-1 focus:outline-bound-border"
+        className="rounded-xl py-4 px-4 w-full outline-none text-white bg-black-dimmed focus:outline-1 focus:outline-bound-border"
         {...(props as any)}
       />
     )
