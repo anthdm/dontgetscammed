@@ -4,6 +4,7 @@ import Input from "components/Input"
 import PageContent from "components/PageContent"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
+import { ethers } from "ethers"
 import useMetaMask from "hooks/useMetaMask"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -12,7 +13,8 @@ import { useForm } from "react-hook-form"
 
 const Page: NextPage = () => {
   const router = useRouter()
-  const { balance, getBalance, connectWallet, isConnected } = useMetaMask()
+  const { provider, balance, getBalance, account, connectWallet, isConnected } =
+    useMetaMask()
   const {
     register,
     handleSubmit,
@@ -27,7 +29,9 @@ const Page: NextPage = () => {
     }
   }, [isConnected])
 
-  const onSubmitBalance = (data: any): void => {
+  const onSubmitBalance = async (data: any): Promise<void> => {
+    const res = await provider?.getBalance(account)
+    const balance = ethers.utils.formatUnits(res!)
     router.push("/adventures/beginner/4")
   }
 

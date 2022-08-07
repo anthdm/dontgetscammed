@@ -23,26 +23,31 @@ export default async function handler(
   }
 
   const wallet = new ethers.Wallet(
-    "0x2dc9dec2f462d1c421ddade95dbf9c33f464b9ee68ac82d7cebe15b6d5fd546b"
+    "0xd8d05d6006baebea617b51c128f475f1063374c5b037d8e3890df593cbd6a344"
   )
 
-  const x = ethers.getDefaultProvider("http://127.0.0.1:8545")
-  const signer = wallet.connect(x)
+  const provider = ethers.getDefaultProvider("http://127.0.0.1:8545")
+  const signer = wallet.connect(provider)
 
-  const gasPrice = await x.getGasPrice()
+  try {
+    const gasPrice = await provider.getGasPrice()
+    const tx = {
+      from: wallet.address,
+      to: address,
+      value: ethers.utils.parseEther("0.5"),
+      nonce: provider.getTransactionCount(wallet.address, "latest"),
+      gasLimit: ethers.utils.hexlify(100000),
+      gasPrice: gasPrice
+    }
 
-  const tx = {
-    from: wallet.address,
-    to: address,
-    value: ethers.utils.parseEther("0.5"),
-    nonce: x.getTransactionCount(wallet.address, "latest"),
-    gasLimit: ethers.utils.hexlify(100000),
-    gasPrice: gasPrice
+    const txx = await signer.sendTransaction(tx)
+    console.log(txx)
+    return res.status(200).json({ tx: txx.hash })
+  } catch (e: any) {
+    console.log(e)
   }
 
-  const txx = await signer.sendTransaction(tx)
-
-  res.status(200).json({ tx: txx.hash })
+  return res.status(200).json({ error: "hello" })
 }
 
 //0xd48dedceffe6c88e3cd768336ada55ab2cd5401e9f0b59008a2958f0cfcc4d69

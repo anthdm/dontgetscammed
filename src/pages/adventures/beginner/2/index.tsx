@@ -9,11 +9,14 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/router"
 import PageP from "components/PageP"
 import PageContent from "components/PageContent"
+import useAddBalance from "hooks/useAddBalance"
 
 const Page: NextPage = () => {
+  // TODO: handle the error
+  const { tx, addBalance, error } = useAddBalance()
   const router = useRouter()
   const [fail, setFail] = useState(false)
-  const { connectWallet, isConnected } = useMetaMask()
+  const { account, connectWallet, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
@@ -26,8 +29,14 @@ const Page: NextPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (tx) {
+      router.push("/adventures/beginner/3")
+    }
+  }, [tx])
+
   const onDontShare = () => {
-    router.push("/adventures/beginner/3")
+    addBalance(account)
   }
 
   const onContinue = () => {
