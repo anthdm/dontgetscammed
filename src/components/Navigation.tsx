@@ -27,10 +27,10 @@ export const Nav: React.FC<NavProps> = () => {
         {" "}
         <div className="font-bold text-2xl lg:text-4xl text-white">
           <Link href="/">
-            <>
+            <a>
               dontgetscammed
               <span className="text-orange-300 text-sm"> Beta</span>
-            </>
+            </a>
           </Link>
         </div>
         <div className="block lg:hidden">
@@ -46,7 +46,7 @@ export const Nav: React.FC<NavProps> = () => {
           </button>
         </div>
         <div className="hidden lg:flex space-x-6 uppercase">
-          <NavLink name="Adventures" href="/completed" />
+          <NavLink name="Adventures" href="/adventures" />
           <NavLink name="FAQ" href="/completed" />
           <NavLink name="Feedback" href="/completed" />
         </div>

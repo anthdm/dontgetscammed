@@ -57,7 +57,7 @@ const Page: NextPage = () => {
             </PageP>
           </div>
           <Spacer />
-          <Button className="w-full bg-muted" disabled>
+          <Button className="w-full bg-muted" isDisabled={true}>
             Coming soon
           </Button>
         </Card>
@@ -72,7 +72,7 @@ const Page: NextPage = () => {
             </PageP>
           </div>
           <Spacer />
-          <Button className="w-full bg-muted" disabled>
+          <Button className="w-full bg-muted" isDisabled={true}>
             Coming soon
           </Button>
         </Card>
