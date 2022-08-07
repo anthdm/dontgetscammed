@@ -23,7 +23,7 @@ export default async function handler(
   }
 
   const wallet = new ethers.Wallet(
-    "0xd8d05d6006baebea617b51c128f475f1063374c5b037d8e3890df593cbd6a344"
+    "0x8cf81d13abd381453218f4a7d154f9e4fd417bc1aec571e7d7d56c6c99768fcd"
   )
 
   const provider = ethers.getDefaultProvider("http://127.0.0.1:8545")

@@ -1,5 +1,5 @@
 import Button from "components/Button"
-import Card from "components/Card"
+import { ErrorCard } from "components/Card"
 import Input from "components/Input"
 import PageContent from "components/PageContent"
 import PageTitle from "components/PageTitle"
@@ -8,13 +8,13 @@ import { ethers } from "ethers"
 import useMetaMask from "hooks/useMetaMask"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 const Page: NextPage = () => {
+  const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
   const router = useRouter()
-  const { provider, balance, getBalance, account, connectWallet, isConnected } =
-    useMetaMask()
+  const { provider, account, connectWallet, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
@@ -25,22 +25,24 @@ const Page: NextPage = () => {
     if (!isConnected) {
       connectWallet()
     } else {
-      getBalance()
     }
   }, [isConnected])
 
+  // TODO: handle the error here
   const onSubmitBalance = async (data: any): Promise<void> => {
-    const res = await provider?.getBalance(account)
-    const balance = ethers.utils.formatUnits(res!)
-    router.push("/adventures/beginner/4")
-  }
+    try {
+      const result = await provider?.getBalance(account)
+      const _balance = ethers.utils.formatUnits(result!)
+      const { balance } = data
 
-  const equalBalance = (amount: string): boolean => {
-    console.log("balance")
-    console.log(balance)
-    console.log("amount")
-    console.log(amount)
-    return amount === balance
+      if (_balance === balance) {
+        router.push("/adventures/beginner/4")
+      } else {
+        setInvalidBalance(true)
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -59,8 +61,7 @@ const Page: NextPage = () => {
       <div className="w-full">
         <Input
           {...register("balance", {
-            required: true,
-            validate: equalBalance
+            required: true
           })}
           placeholder="enter your account balance"
         />
@@ -68,12 +69,15 @@ const Page: NextPage = () => {
       <Spacer />
       {errors.balance && (
         <>
-          <Card error={true} className="mt-6">
-            <h3 className="text-xl mb-4 font-bold ">Whoops!</h3>
-            <p className="text-lg">
-              It seems that the balance you've entered does not match.
-            </p>
-          </Card>
+          <ErrorCard msg="This is a required field" />
+        </>
+      )}
+      {invalidBalance && (
+        <>
+          <ErrorCard
+            title="Whoops!"
+            msg="It seems that the balance you've entered does not match"
+          />
           <Spacer />
         </>
       )}

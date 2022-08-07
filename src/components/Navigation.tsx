@@ -26,7 +26,12 @@ export const Nav: React.FC<NavProps> = () => {
       <div className="flex space-x-20 items-end">
         {" "}
         <div className="font-bold text-2xl lg:text-4xl text-white">
-          <Link href="/">dontgetscammed</Link>
+          <Link href="/">
+            <>
+              dontgetscammed
+              <span className="text-orange-300 text-sm"> Beta</span>
+            </>
+          </Link>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-teal-500 appearance-none focus:outline-none">
