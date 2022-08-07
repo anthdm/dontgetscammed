@@ -1,20 +1,21 @@
 import Button from "components/Button"
-import Card, { ErrorCard } from "components/Card"
+import Card from "components/Card"
 import PageContent from "components/PageContent"
+import PageP from "components/PageP"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
-import { ethers } from "ethers"
 import useMetaMask from "hooks/useMetaMask"
-import { NextPage } from "next"
-import { Router, useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const ALICE = "0x212F9787A4f26d5aE5948B089dAde5BCA1182404"
 const BOB = "0x112ba38B875BfE7C6Efb52c20FEAE8E6A9FE43F0"
 
-const Page: NextPage = () => {
-  const router = useRouter()
-  const { provider, account, connectWallet, isConnected } = useMetaMask()
+interface Props {
+  account: string
+  nextStep: () => void
+}
+const BModule4: React.FC<Props> = ({ nextStep, account }) => {
+  const { provider } = useMetaMask(true)
   const [isAlice, setIsAlice] = useState(false)
   const [isBob, setIsBob] = useState(false)
   const renderButton = isAlice || isBob
@@ -23,9 +24,7 @@ const Page: NextPage = () => {
     await registerCallback()
   }
 
-  const onContinueNextPage = () => {
-    router.push("/")
-  }
+  const onContinueNextPage = () => {}
 
   const registerCallback = async () => {
     try {
@@ -107,25 +106,20 @@ const Page: NextPage = () => {
     )
   }
 
-  useEffect(() => {
-    if (!isConnected) {
-      connectWallet()
-    }
-  }, [])
-
   return (
     <PageContent>
       <PageTitle>Sending Ether</PageTitle>
-      <p className="text-lg text-neutral-400">
+      <PageP>
         An experienced crypto user should be able to transfer currency to
         another account. Therefore, we listed two account addresses that will
         each have a specific result when they receive Ether. Could you send any
         arbitrary amount to one of those addresses?
-      </p>
+      </PageP>
       <Spacer />
-      <p className="text-lg mb-8 text-blue-500">
+      <p className="font-bold text-lg mb-8 text-blue-500">
         Task: sent any arbitrary amount to one of the accounts listed below.
       </p>
+      <Spacer />
       {!isAlice && !isBob && renderAddresses()}
       {isAlice && renderAlice()}
       {isBob && renderBob()}
@@ -135,9 +129,8 @@ const Page: NextPage = () => {
           <Button onClick={onContinueNextPage}>Continue</Button>
         </>
       )}
-      <Spacer />
     </PageContent>
   )
 }
 
-export default Page
+export default BModule4

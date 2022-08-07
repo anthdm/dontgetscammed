@@ -1,40 +1,41 @@
-import Button from "components/Button"
-import Card from "components/Card"
-import Input from "components/Input"
+import React, { useEffect } from "react"
+import { useForm } from "react-hook-form"
 import PageContent from "components/PageContent"
 import PageP from "components/PageP"
-import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
+import Input from "components/Input"
+import Button from "components/Button"
+import Card from "components/Card"
+import PageTitle from "components/PageTitle"
 import useAddBalance from "hooks/useAddBalance"
-import useMetaMask from "hooks/useMetaMask"
-import type { NextPage } from "next"
-import { useRouter } from "next/router"
-import { useEffect } from "react"
-import { useForm } from "react-hook-form"
 
-const Page: NextPage = () => {
-  const router = useRouter()
-  const { account, isConnected, connectWallet } = useMetaMask()
+interface Props {
+  account: string
+  nextStep: () => void
+}
+
+const BModule2: React.FC<Props> = ({ account, nextStep }) => {
+  const { addBalance, tx } = useAddBalance()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
+  useEffect(() => {
+    if (tx) {
+      nextStep()
+    }
+  }, [tx])
+
   const equalAddress = (address: string): boolean => {
     return address.toLowerCase() === account
   }
+
   const onContinue = (data: any): void => {
     const { address } = data
-    // addBalance(address)
-    router.push("/adventures/beginner/2")
+    addBalance(address)
   }
-
-  useEffect(() => {
-    if (!isConnected) {
-      connectWallet()
-    }
-  }, [])
 
   return (
     <PageContent>
@@ -78,4 +79,4 @@ const Page: NextPage = () => {
   )
 }
 
-export default Page
+export default BModule2

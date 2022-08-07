@@ -3,40 +3,40 @@ import { ErrorCard } from "components/Card"
 import Input from "components/Input"
 import PageContent from "components/PageContent"
 import PageTitle from "components/PageTitle"
+import PageP from "components/PageP"
 import Spacer from "components/Spacer"
 import { ethers } from "ethers"
 import useMetaMask from "hooks/useMetaMask"
-import type { NextPage } from "next"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-const Page: NextPage = () => {
+interface Props {
+  account: string
+  nextStep: () => void
+}
+
+const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
-  const router = useRouter()
-  const { provider, account, connectWallet, isConnected } = useMetaMask()
+  const { provider, isConnected } = useMetaMask(true)
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
-  useEffect(() => {
-    if (!isConnected) {
-      connectWallet()
-    } else {
-    }
-  }, [isConnected])
+  console.log(isConnected)
 
   // TODO: handle the error here
   const onSubmitBalance = async (data: any): Promise<void> => {
     try {
+      console.log(provider)
       const result = await provider?.getBalance(account)
       const _balance = ethers.utils.formatUnits(result!)
+      const amount = (+_balance).toFixed(1)
       const { balance } = data
 
-      if (_balance === balance) {
-        router.push("/adventures/beginner/4")
+      if (amount === balance) {
+        nextStep()
       } else {
         setInvalidBalance(true)
       }
@@ -48,16 +48,17 @@ const Page: NextPage = () => {
   return (
     <PageContent>
       <PageTitle>Account balance</PageTitle>
-      <p className="text-lg text-neutral-400">
+      <PageP>
         To send Ether, you must have a balance in your wallet. Luckily we got
         you covered. We added some balance to your account. Could you go check
         it out?
-      </p>
+      </PageP>
       <Spacer />
-      <p className="text-lg mb-8 text-blue-500">
+      <p className="font-bold text-lg mb-8 text-blue-500">
         Task: check the balance of your account and enter it in the input field
         below.
       </p>
+      <Spacer />
       <div className="w-full">
         <Input
           {...register("balance", {
@@ -70,6 +71,7 @@ const Page: NextPage = () => {
       {errors.balance && (
         <>
           <ErrorCard msg="This is a required field" />
+          <Spacer />
         </>
       )}
       {invalidBalance && (
@@ -86,4 +88,4 @@ const Page: NextPage = () => {
   )
 }
 
-export default Page
+export default BModule3

@@ -2,21 +2,21 @@ import Button from "components/Button"
 import Card from "components/Card"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
-import useMetaMask from "hooks/useMetaMask"
-import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/router"
 import PageP from "components/PageP"
 import PageContent from "components/PageContent"
 import useAddBalance from "hooks/useAddBalance"
 
-const Page: NextPage = () => {
+interface Props {
+  account: string
+  nextStep: () => void
+}
+
+const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   // TODO: handle the error
   const { tx, addBalance, error } = useAddBalance()
-  const router = useRouter()
   const [fail, setFail] = useState(false)
-  const { account, connectWallet, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
@@ -24,14 +24,8 @@ const Page: NextPage = () => {
   } = useForm()
 
   useEffect(() => {
-    if (!isConnected) {
-      connectWallet()
-    }
-  }, [])
-
-  useEffect(() => {
     if (tx) {
-      router.push("/adventures/beginner/3")
+      nextStep()
     }
   }, [tx])
 
@@ -53,14 +47,14 @@ const Page: NextPage = () => {
         in the text area below.
       </PageP>
       <Spacer />
-      <p className="text-lg text-blue-500">
+      <p className="font-bold text-lg text-blue-500">
         Task: enter your secret recovery phrase in the input field below
       </p>
       <Spacer />
-      <div className="flex flex-row space-x-4">
+      <div className="">
         <textarea
           {...register("secret", { required: true })}
-          className="w-full bg-black-dimmed rounded-xl p-4"
+          className="w-full bg-black-dimmed rounded-xl px-4 py-6"
         />
       </div>
       {errors.secret && (
@@ -79,13 +73,17 @@ const Page: NextPage = () => {
           </p>
         </Card>
       )}
-      <div className="flex space-x-5 mt-8">
-        <Button onClick={onDontShare}>Dont share</Button>
-        <Button onClick={handleSubmit(onContinue)}>Continue</Button>
-      </div>
       <Spacer />
+      <div className="flex space-x-5 mt-8">
+        <div>
+          <Button onClick={onDontShare}>Dont share</Button>
+        </div>
+        <div>
+          <Button onClick={handleSubmit(onContinue)}>Continue</Button>
+        </div>
+      </div>
     </PageContent>
   )
 }
 
-export default Page
+export default BModule3

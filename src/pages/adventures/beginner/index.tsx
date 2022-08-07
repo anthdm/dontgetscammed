@@ -1,81 +1,51 @@
-import Spacer from "components/Spacer"
 import type { NextPage } from "next"
 import useMetaMask from "hooks/useMetaMask"
-import Button from "components/Button"
-import PageTitle from "components/PageTitle"
-import { useRouter } from "next/router"
-import { useEffect } from "react"
-import Card from "components/Card"
-import PageP from "components/PageP"
-import PageContent from "components/PageContent"
+import { useEffect, useState } from "react"
+import BModule1 from "modules/beginner/BModule1"
+import BModule2 from "modules/beginner/BModule2"
+import BModule3 from "modules/beginner/BModule3"
+import BModule4 from "modules/beginner/BModule4"
+import BModule5 from "modules/beginner/BModule5"
+import useProgress from "hooks/useProgress"
 
 const Adventure: NextPage = () => {
-  const router = useRouter()
-  const { connectWallet, account, walletInstalled, isConnected } = useMetaMask()
+  const [currentStep, setCurrentStep] = useState(1)
+  const { isConnected, connectWallet, account, provider } = useMetaMask()
+  const { progress, getProgress } = useProgress()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (progress.step !== currentStep) {
+      setCurrentStep(3)
+      setIsLoading(false)
+    }
+  }, [progress])
 
   useEffect(() => {
     if (!isConnected) {
       connectWallet()
+    } else {
+      getProgress(account)
     }
-  }, [])
+  }, [isConnected])
 
-  const onContinue = () => {
-    router.push("/adventures/beginner/1")
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1)
   }
 
-  const renderMetaMaskNotConnected = () => {
-    return (
-      <Card>
-        <h3 className="text-xl mb-4 font-bold">Connect your wallet</h3>
-        <p className="text-lg">
-          We have detected that you have Metamask installed, but it is not
-          connected yet. Click the button below to connect your wallet with the
-          application.
-        </p>
-        <Spacer />
-        <Button onClick={connectWallet}>Connect my wallet</Button>
-      </Card>
-    )
-  }
-
-  const renderMetaMaskConnected = () => {
-    return (
-      <>
-        <Card className="border-green-300 border">
-          <h3 className="text-xl mb-4 font-bold">Sweet!</h3>
-          <p className="text-lg">
-            You are now connected with your MetaMask wallet and ready to start
-            your adventure.
-          </p>
-        </Card>
-        <Spacer />
-        <Button onClick={onContinue}>Continue</Button>
-      </>
-    )
-  }
-
-  const renderMetaMaskNotInstalled = () => {
-    return (
-      <Card>
-        <h3 className="text-xl mb-4 font-bold">MetaMask not installed</h3>
-        <p className="text-lg">Please install Metamask to continue.</p>
-      </Card>
-    )
+  // TODO: make the loader cleaner
+  if (isLoading) {
+    return <>loading....</>
   }
 
   return (
-    <PageContent>
-      <PageTitle>Create your wallet</PageTitle>
-      <PageP>
-        To enter the world of cryptocurrencies, you must have a wallet first.
-        Think about a wallet as a bank account, but decentralized. It will be
-        your bread and butter to interact with the blockchain network.
-      </PageP>
-      <Spacer />
-      {!walletInstalled && renderMetaMaskNotInstalled()}
-      {!isConnected && walletInstalled && renderMetaMaskNotConnected()}
-      {isConnected && renderMetaMaskConnected()}
-    </PageContent>
+    <>
+      {currentStep === 1 && <BModule1 account={account} nextStep={nextStep} />}
+      {currentStep === 2 && <BModule2 account={account} nextStep={nextStep} />}
+      {currentStep === 3 && <BModule3 account={account} nextStep={nextStep} />}
+      {currentStep === 4 && <BModule4 account={account} nextStep={nextStep} />}
+      {currentStep === 5 && <BModule5 account={account} nextStep={nextStep} />}
+    </>
   )
 }
 
