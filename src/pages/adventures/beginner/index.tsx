@@ -11,7 +11,7 @@ import PageContent from "components/PageContent"
 
 const Adventure: NextPage = () => {
   const router = useRouter()
-  const { connectWallet, walletInstalled, isConnected } = useMetaMask()
+  const { connectWallet, account, walletInstalled, isConnected } = useMetaMask()
 
   useEffect(() => {
     if (!isConnected) {
