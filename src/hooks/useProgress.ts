@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import useEthereum from "./useEthereum"
 
 interface UseProgressData {
-  addNewAccount: (addres: string) => void
+  saveProgress: (address: string, step: number) => void
   getProgress: (address: string) => void
   progress: State
 }
@@ -11,11 +12,23 @@ interface State {
 }
 
 const useProgress = (): UseProgressData => {
-  const [progress, setProgress] = useState<State>({ step: 0 })
+  const { account } = useEthereum()
+  const [progress, setProgress] = useState<State>({ step: 1 })
   const getProgress = (address: string) => {
     try {
       const data = localStorage.getItem(address)
       setProgress(JSON.parse(data!))
+    } catch (e: any) {
+      console.log(e)
+    }
+  }
+
+  const saveProgress = (address: string, step: number) => {
+    try {
+      const data = {
+        step
+      }
+      localStorage.setItem(address, JSON.stringify(data))
     } catch (e: any) {
       console.log(e)
     }
@@ -32,8 +45,14 @@ const useProgress = (): UseProgressData => {
     }
   }
 
+  useEffect(() => {
+    if (account) {
+      getProgress(account)
+    }
+  }, [account])
+
   return {
-    addNewAccount,
+    saveProgress,
     getProgress,
     progress
   }

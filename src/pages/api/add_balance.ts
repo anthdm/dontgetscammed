@@ -41,7 +41,7 @@ export default async function handler(
     }
 
     const txx = await signer.sendTransaction(tx)
-    console.log(txx)
+    console.log("adding balance")
     return res.status(200).json({ tx: txx.hash })
   } catch (e: any) {
     console.log(e)

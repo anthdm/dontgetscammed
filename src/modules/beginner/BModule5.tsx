@@ -4,29 +4,30 @@ import PageContent from "components/PageContent"
 import PageP from "components/PageP"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
-import useMetaMask from "hooks/useMetaMask"
+import useEthereum from "hooks/useEthereum"
 import { useState } from "react"
 
 const ALICE = "0x212F9787A4f26d5aE5948B089dAde5BCA1182404"
 const BOB = "0x112ba38B875BfE7C6Efb52c20FEAE8E6A9FE43F0"
 
 interface Props {
-  account: string
   nextStep: () => void
 }
-const BModule4: React.FC<Props> = ({ nextStep, account }) => {
-  const { provider } = useMetaMask(true)
+const BModule4: React.FC<Props> = ({ nextStep }) => {
+  const { provider, account } = useEthereum()
   const [isAlice, setIsAlice] = useState(false)
   const [isBob, setIsBob] = useState(false)
   const renderButton = isAlice || isBob
+  const [noTx, setNoTx] = useState(false)
 
   const onContinue = async () => {
-    await registerCallback()
+    console.log("checking tx")
+    await checkTxs()
   }
 
   const onContinueNextPage = () => {}
 
-  const registerCallback = async () => {
+  const checkTxs = async () => {
     try {
       const blockNumber = await provider?.getBlockNumber()
 
@@ -36,17 +37,19 @@ const BModule4: React.FC<Props> = ({ nextStep, account }) => {
           (tx) => tx.from.toLowerCase() === account
         )
 
+        if (txs?.length === 0) {
+          setNoTx(true)
+        }
+
         txs?.forEach((tx) => {
           if (tx.to === ALICE) {
             setIsAlice(true)
+            setNoTx(false)
           } else if (tx.to === BOB) {
             setIsBob(true)
-          } else {
-            console.log("not yet sent to both")
+            setNoTx(false)
           }
         })
-
-        console.log(txs)
       }
     } catch (e) {
       console.log(e)
@@ -58,22 +61,25 @@ const BModule4: React.FC<Props> = ({ nextStep, account }) => {
       <>
         <Card>
           <h3 className="text-xl mb-4 font-bold">Alice</h3>
-          <p className="text-lg">
+          <p className="text-lg mb-2">
             When Alice receives currency on her account, she will sent back
             DOUBLE the amount. Go grab your chance to make a quick profit.
           </p>
+          <p className="font-bold text-lg text-green-400">Reward: 6 points</p>
           <Spacer />
           <p className="text-lg">address: {ALICE}</p>
         </Card>
         <Spacer />
         <Card>
           <h3 className="text-xl mb-4 font-bold">Bob</h3>
-          <p className="text-lg">
+          <p className="text-lg mb-2">
             Bob will be very thankfull when he receives your donation!
           </p>
+          <p className="font-bold text-lg text-green-400">Reward: 3 points</p>
           <Spacer />
           <p className="text-lg">address: {BOB}</p>
         </Card>
+        {noTx && renderNoTx()}
         <Spacer />
         <Button onClick={onContinue}>Continue</Button>
       </>
@@ -88,6 +94,20 @@ const BModule4: React.FC<Props> = ({ nextStep, account }) => {
           <p className="text-lg">Bob thanks you for your generous donation!</p>
         </Card>
       </>
+    )
+  }
+
+  const renderNoTx = () => {
+    return (
+      <Card className="mt-8 border border-red-500">
+        <h3 className="text-xl mb-4 font-bold">
+          Could not find any transaction to Bob or Alice.
+        </h3>
+        <p className="text-lg">
+          It could be that your transaction is still in progress. Try again in 1
+          minute or so.
+        </p>
+      </Card>
     )
   }
 

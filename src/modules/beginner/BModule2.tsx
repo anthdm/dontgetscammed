@@ -7,7 +7,6 @@ import Input from "components/Input"
 import Button from "components/Button"
 import Card from "components/Card"
 import PageTitle from "components/PageTitle"
-import useAddBalance from "hooks/useAddBalance"
 
 interface Props {
   account: string
@@ -15,27 +14,18 @@ interface Props {
 }
 
 const BModule2: React.FC<Props> = ({ account, nextStep }) => {
-  const { addBalance, tx } = useAddBalance()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
-  useEffect(() => {
-    if (tx) {
-      nextStep()
-    }
-  }, [tx])
-
   const equalAddress = (address: string): boolean => {
-    console.log(account)
     return address.toLowerCase() === account
   }
 
   const onContinue = (data: any): void => {
-    const { address } = data
-    addBalance(address)
+    nextStep()
   }
 
   return (
@@ -48,9 +38,10 @@ const BModule2: React.FC<Props> = ({ account, nextStep }) => {
         money.
       </PageP>
       <Spacer />
-      <p className="font-bold text-lg text-blue-500">
+      <p className="font-bold text-lg text-blue-500 mb-2">
         Task: find the address of you wallet and enter it in the input below
       </p>
+      <p className="font-bold text-lg text-green-400">Reward: 1 point</p>
       <Spacer />
       <div className="w-full">
         <Input

@@ -48,6 +48,7 @@ export const Nav: React.FC<NavProps> = () => {
         </div>
         <div className="hidden lg:flex space-x-6 uppercase">
           <NavLink name="Adventures" href="/adventures" />
+          <NavLink name="Leaderboard" href="/completed" />
           <NavLink name="FAQ" href="/completed" />
           <NavLink name="Feedback" href="/completed" />
         </div>

@@ -30,6 +30,7 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   }, [tx])
 
   const onDontShare = () => {
+    console.log("adding balance")
     addBalance(account)
   }
 
@@ -47,9 +48,10 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
         in the text area below.
       </PageP>
       <Spacer />
-      <p className="font-bold text-lg text-blue-500">
+      <p className="font-bold text-lg text-blue-500 mb-2">
         Task: enter your secret recovery phrase in the input field below
       </p>
+      <p className="font-bold text-lg text-green-400">Reward: 2 points</p>
       <Spacer />
       <div className="">
         <textarea

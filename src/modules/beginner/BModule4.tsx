@@ -6,9 +6,9 @@ import PageTitle from "components/PageTitle"
 import PageP from "components/PageP"
 import Spacer from "components/Spacer"
 import { ethers } from "ethers"
-import useMetaMask from "hooks/useMetaMask"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import useEthereum from "hooks/useEthereum"
 
 interface Props {
   account: string
@@ -17,7 +17,7 @@ interface Props {
 
 const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
-  const { provider, isConnected } = useMetaMask()
+  const { provider } = useEthereum()
   const {
     register,
     handleSubmit,
@@ -27,13 +27,13 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   // TODO: handle the error here
   const onSubmitBalance = async (data: any): Promise<void> => {
     try {
-      console.log(provider)
       const result = await provider?.getBalance(account)
       const _balance = ethers.utils.formatUnits(result!)
       const amount = (+_balance).toFixed(1)
       const { balance } = data
+      const balanceConverted = Number(balance).toFixed(1)
 
-      if (amount === balance) {
+      if (amount === balanceConverted) {
         nextStep()
       } else {
         setInvalidBalance(true)
@@ -52,10 +52,11 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
         it out?
       </PageP>
       <Spacer />
-      <p className="font-bold text-lg mb-8 text-blue-500">
+      <p className="font-bold text-lg mb-8 text-blue-500 mb-2">
         Task: check the balance of your account and enter it in the input field
         below.
       </p>
+      <p className="font-bold text-lg text-green-400">Reward: 1 point</p>
       <Spacer />
       <div className="w-full">
         <Input

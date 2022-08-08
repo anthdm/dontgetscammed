@@ -4,7 +4,8 @@ import Spacer from "components/Spacer"
 import Card from "components/Card"
 import PageP from "components/PageP"
 import PageContent from "components/PageContent"
-import useMetaMask from "hooks/useMetaMask"
+import useEthereum from "hooks/useEthereum"
+import ConnectAccount from "components/ConnectAccount"
 
 interface Props {
   account: string
@@ -12,22 +13,7 @@ interface Props {
 }
 
 const BModule1: React.FC<Props> = ({ nextStep }) => {
-  const { connect, walletInstalled, isConnected } = useMetaMask()
-
-  const renderMetaMaskNotConnected = () => {
-    return (
-      <Card>
-        <h3 className="text-xl mb-4 font-bold">Connect your wallet</h3>
-        <p className="text-lg">
-          We have detected that you have Metamask installed, but it is not
-          connected yet. Click the button below to connect your wallet with the
-          application.
-        </p>
-        <Spacer />
-        <Button onClick={connect}>Connect my wallet</Button>
-      </Card>
-    )
-  }
+  const { account } = useEthereum()
 
   const renderMetaMaskConnected = () => {
     return (
@@ -63,9 +49,9 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
         your bread and butter to interact with the blockchain network.
       </PageP>
       <Spacer />
-      {!walletInstalled && renderMetaMaskNotInstalled()}
-      {!isConnected && walletInstalled && renderMetaMaskNotConnected()}
-      {isConnected && renderMetaMaskConnected()}
+      {/* {!walletInstalled && renderMetaMaskNotInstalled()} */}
+      {!account && <ConnectAccount />}
+      {account && renderMetaMaskConnected()}
     </PageContent>
   )
 }
