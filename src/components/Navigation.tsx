@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import ConnectButton from "./ConnectButton"
 
 interface NavLinkProps {
   children?: React.ReactNode
@@ -50,6 +51,9 @@ export const Nav: React.FC<NavProps> = () => {
           <NavLink name="FAQ" href="/completed" />
           <NavLink name="Feedback" href="/completed" />
         </div>
+      </div>
+      <div className="hidden lg:block">
+        <ConnectButton />
       </div>
     </div>
   )

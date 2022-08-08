@@ -12,7 +12,7 @@ interface Props {
 }
 
 const BModule1: React.FC<Props> = ({ nextStep }) => {
-  const { connectWallet, account, walletInstalled, isConnected } = useMetaMask()
+  const { connect, walletInstalled, isConnected } = useMetaMask()
 
   const renderMetaMaskNotConnected = () => {
     return (
@@ -24,7 +24,7 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
           application.
         </p>
         <Spacer />
-        <Button onClick={connectWallet}>Connect my wallet</Button>
+        <Button onClick={connect}>Connect my wallet</Button>
       </Card>
     )
   }

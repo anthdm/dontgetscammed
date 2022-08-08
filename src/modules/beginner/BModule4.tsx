@@ -17,14 +17,12 @@ interface Props {
 
 const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
-  const { provider, isConnected } = useMetaMask(true)
+  const { provider, isConnected } = useMetaMask()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
-
-  console.log(isConnected)
 
   // TODO: handle the error here
   const onSubmitBalance = async (data: any): Promise<void> => {

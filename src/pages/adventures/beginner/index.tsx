@@ -10,21 +10,20 @@ import useProgress from "hooks/useProgress"
 
 const Adventure: NextPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
-  const { isConnected, connectWallet, account, provider } = useMetaMask()
+  const { isConnected, account } = useMetaMask()
   const { progress, getProgress } = useProgress()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (progress.step !== currentStep) {
-      setCurrentStep(3)
-      setIsLoading(false)
-    }
+    // if (progress.step !== currentStep) {
+    //   // setCurrentStep(1)
+    //   setIsLoading(false)
+    // }
+    setIsLoading(false)
   }, [progress])
 
   useEffect(() => {
-    if (!isConnected) {
-      connectWallet()
-    } else {
+    if (isConnected) {
       getProgress(account)
     }
   }, [isConnected])

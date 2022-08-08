@@ -29,6 +29,7 @@ const BModule2: React.FC<Props> = ({ account, nextStep }) => {
   }, [tx])
 
   const equalAddress = (address: string): boolean => {
+    console.log(account)
     return address.toLowerCase() === account
   }
 
@@ -47,7 +48,7 @@ const BModule2: React.FC<Props> = ({ account, nextStep }) => {
         money.
       </PageP>
       <Spacer />
-      <p className="text-lg text-blue-500">
+      <p className="font-bold text-lg text-blue-500">
         Task: find the address of you wallet and enter it in the input below
       </p>
       <Spacer />

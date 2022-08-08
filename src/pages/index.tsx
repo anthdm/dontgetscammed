@@ -9,7 +9,8 @@ const Home: NextPage = () => {
     <div className="flex flex-col">
       <PageContent>
         <h1 className="text-3xl lg:text-5xl font-bold tracking-wide leading-tight mb-6">
-          An <span className="text-blue-500">interactive</span> platform that
+          An <span className="text-blue-500">educational</span> and{" "}
+          <span className="text-blue-500">interactive</span> platform that
           prepares you to enter the world of{" "}
           <span className="text-blue-500">cryptocurrencies</span>
         </h1>
