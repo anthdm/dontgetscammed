@@ -52,7 +52,7 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
         it out?
       </PageP>
       <Spacer />
-      <p className="font-bold text-lg mb-8 text-blue-500 mb-2">
+      <p className="font-bold text-lg text-blue-500 mb-2">
         Task: check the balance of your account and enter it in the input field
         below.
       </p>

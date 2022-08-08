@@ -11,7 +11,7 @@ import ConnectAccount from "components/ConnectAccount"
 
 const Adventure: NextPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
-  const { account } = useEthereum()
+  const { account, chainId } = useEthereum()
   const { progress, saveProgress } = useProgress()
 
   useEffect(() => {
@@ -23,6 +23,10 @@ const Adventure: NextPage = () => {
   const nextStep = () => {
     saveProgress(account!, currentStep + 1)
     setCurrentStep(currentStep + 1)
+  }
+
+  if (account && chainId !== "ddd") {
+    return <div>not the correct chain id</div>
   }
 
   if (!account) {

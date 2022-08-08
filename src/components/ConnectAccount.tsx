@@ -15,7 +15,7 @@ const ConnectAccount: React.FC = () => {
         <p className="text-lg">
           We have detected that you have Metamask installed, but it is not
           connected yet. Click the button below to connect your wallet with the
-          application.
+          isolated application.
         </p>
         <Spacer />
         <Button onClick={connect}>Connect my wallet</Button>
