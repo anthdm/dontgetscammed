@@ -31,6 +31,8 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
     nextStep()
   }
 
+  // TODO: A better aproach is here to store the blocknumber from when this address is first seen
+  // on the application. That should save some iterations for sure.
   const checkTxs = async () => {
     try {
       const blockNumber = await provider?.getBlockNumber()

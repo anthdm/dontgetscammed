@@ -23,7 +23,7 @@ export default async function handler(
   }
 
   const wallet = new ethers.Wallet(process.env.PK!)
-  const provider = ethers.getDefaultProvider(process.env.chainHost)
+  const provider = ethers.getDefaultProvider(process.env.rpcURL)
   const signer = wallet.connect(provider)
 
   try {

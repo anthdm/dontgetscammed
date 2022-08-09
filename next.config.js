@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   env: {
     chainId: "0x181cd",
-    chainHost: "https://dontgetscammed.network"
+    rpcURL: "https://dontgetscammed.network"
   }
 }
 

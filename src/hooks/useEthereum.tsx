@@ -12,7 +12,7 @@ interface EthereumContext {
   provider?: Web3Provider
   connect?: () => void
   disconnect?: () => void
-  chainId?: string
+  chainId?: number
   walletInstalled?: boolean
 }
 
@@ -26,7 +26,7 @@ export const EthereumProvider = ({ children }: Props) => {
   const [account, setAccount] = useState<string>()
   const [provider, setProvider] = useState<Web3Provider>()
   const [signer, setSigner] = useState<JsonRpcSigner>()
-  const [chainId, setChainId] = useState<string>()
+  const [chainId, setChainId] = useState<number>()
   const [walletInstalled, setWalletInstalled] = useState(true)
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const EthereumProvider = ({ children }: Props) => {
           {
             chainId: process.env.chainId,
             chainName: "Don't get scammed private network",
-            rpcUrls: ["https://dontgetscammed.network"],
+            rpcUrls: [process.env.rpcURL],
             nativeCurrency: {
               symbol: "ETH",
               decimals: 18
@@ -83,7 +83,7 @@ export const EthereumProvider = ({ children }: Props) => {
 
       try {
         const chainId = await instance.request({ method: "eth_chainId" })
-        setChainId(chainId)
+        setChainId(Number(chainId))
 
         addChainId()
 
@@ -95,6 +95,12 @@ export const EthereumProvider = ({ children }: Props) => {
         setProvider(provider)
 
         localStorage.setItem("DGSCONNECT", "meta")
+
+        instance.on("chainChanged", (receivedChainId: string | number) => {
+          const newChainId = Number(receivedChainId)
+          console.log("chain changed to => ", newChainId)
+          setChainId(newChainId)
+        })
       } catch (e: any) {
         console.log(e.message)
       }

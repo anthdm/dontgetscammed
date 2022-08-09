@@ -11,10 +11,12 @@ import ConnectAccount from "components/ConnectAccount"
 import Result from "modules/beginner/Result"
 import Card from "components/Card"
 import PageContent from "components/PageContent"
+import Spacer from "components/Spacer"
+import Button from "components/Button"
 
 const Adventure: NextPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
-  const { account, chainId } = useEthereum()
+  const { account, chainId, connect } = useEthereum()
   const { progress, saveProgress } = useProgress()
 
   useEffect(() => {
@@ -28,7 +30,8 @@ const Adventure: NextPage = () => {
     setCurrentStep(currentStep + 1)
   }
 
-  if (account && chainId !== process.env.chainId) {
+  const dsgChainId = Number(process.env.chainId)
+  if (account && chainId !== dsgChainId) {
     return (
       <PageContent>
         <Card className="border border-orange-400">
@@ -36,6 +39,12 @@ const Adventure: NextPage = () => {
           <p className="text-lg">
             You are currently not connected to the dontgetscammed network.
           </p>
+          <Spacer />
+          <p className="text-lg">
+            Your are currently connected to network: {chainId}
+          </p>
+          <Spacer />
+          <Button onClick={connect}>Connect to DGS network</Button>
         </Card>
       </PageContent>
     )
