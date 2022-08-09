@@ -70,8 +70,8 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
           <p className="text-lg">
             <span className="font-bold">Never</span> share your secret phrase
             with anyone! Nobody will ever ask you for your secret phrase unless
-            the person is willing to scam you! You can click "don't share" now,
-            but never make this mistake again. Pinky swear!
+            the person is willing to scam you! You can click don&apos;t share
+            now, but never make this mistake again. Pinky swear!
           </p>
         </Card>
       )}

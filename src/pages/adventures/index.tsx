@@ -39,7 +39,7 @@ const Page: NextPage = () => {
             <PageP>
               Onboard the world of cryptocurrencies and learn everything about a
               wallet. Send and receive currency will be your main tasks. But
-              watch out, don't get scammed!
+              watch out, don&apos;t get scammed!
             </PageP>
           </div>
           <Spacer />
