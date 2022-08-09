@@ -10,10 +10,7 @@ const LeaderBoard: NextPage = () => {
     <PageContent>
       <Card className="border border-blue-400">
         <h3 className="text-xl mb-4 font-bold">Hold on tight!</h3>
-        <PageP>
-          Leader boards will be available with the release of the "advanced"
-          adventures. ETA September. Stay tuned!
-        </PageP>
+        <PageP></PageP>
         <Spacer />
         <Link href="/">
           <a className="text-blue-400 font-bold hover:underline">
