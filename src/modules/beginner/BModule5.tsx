@@ -125,7 +125,7 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
         </h3>
         <p className="text-lg">
           You just sent money to Alice, who promised to send back double the
-          amount. Remember, never trust people you don't know in this
+          amount. Remember, never trust people you don&apos;t know in this
           space—especially not those who promise you to double your money for
           free.
         </p>

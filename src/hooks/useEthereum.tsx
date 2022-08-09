@@ -37,7 +37,7 @@ export const EthereumProvider = ({ children }: Props) => {
       setSigner(undefined)
       console.log("disconnected")
     }
-  }, [account])
+  }, [account, provider])
 
   useEffect(() => {
     if (!window.ethereum) {

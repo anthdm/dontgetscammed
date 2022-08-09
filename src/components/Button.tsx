@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react"
-import { BarLoader, CircleLoader, PulseLoader } from "react-spinners"
+import { PulseLoader } from "react-spinners"
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   children?: React.ReactNode

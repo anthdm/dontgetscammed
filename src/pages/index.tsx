@@ -18,13 +18,13 @@ const Home: NextPage = () => {
         <p className="lg:text-xl font-bold text-muted tracking-wide">
           Enter the world of cryptocurrencies in an isolated environment where
           you earn points by completing adventures ranging from beginner to
-          expert. But watch out, don't get scammed!
+          expert. But watch out, don&apos;t get scammed!
         </p>
       </PageContent>
       <div className="mt-10">
         <Link href="/adventures">
           <button className="bg-blue-500 hover:bg-blue-600 px-4 py-4 rounded-xl font-bold">
-            I'm ready to start my adventure
+            I&apos;m ready to start my adventure
           </button>
         </Link>
       </div>
@@ -40,10 +40,10 @@ const Home: NextPage = () => {
         </PageP>
         <Spacer />
         <PageP>
-          That's why I made this interactive application where you will learn
-          everything about interacting with cryptocurrencies in an isolated
-          environment. Discover adventures from beginner to expert, but watch
-          out, don't get scammed!
+          That&apos;s why I made this interactive application where you will
+          learn everything about interacting with cryptocurrencies in an
+          isolated environment. Discover adventures from beginner to expert, but
+          watch out, don&apos;t get scammed!
         </PageP>
       </PageContent>
       <div className="my-10"></div>
