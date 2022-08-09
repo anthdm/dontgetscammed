@@ -22,12 +22,17 @@ export default async function handler(
     return res.status(400).json({ error: "invalid account address" })
   }
 
-  const wallet = new ethers.Wallet(process.env.pk!)
-
-  const provider = ethers.getDefaultProvider("https://dontgetscammed.network")
+  const wallet = new ethers.Wallet(process.env.PK!)
+  const provider = ethers.getDefaultProvider(process.env.chainHost)
   const signer = wallet.connect(provider)
 
   try {
+    // Check the balance first, if the user already have balance dont add extra.
+    const balance = await provider.getBalance(address)
+    if (balance.gt(0)) {
+      return res.status(200).json({ tx: "ok" })
+    }
+
     const gasPrice = await provider.getGasPrice()
     const tx = {
       from: wallet.address,
@@ -47,5 +52,3 @@ export default async function handler(
 
   return res.status(200).json({ error: "hello" })
 }
-
-//0xd48dedceffe6c88e3cd768336ada55ab2cd5401e9f0b59008a2958f0cfcc4d69

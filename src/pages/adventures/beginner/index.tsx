@@ -9,6 +9,8 @@ import useProgress from "hooks/useProgress"
 import useEthereum from "hooks/useEthereum"
 import ConnectAccount from "components/ConnectAccount"
 import Result from "modules/beginner/Result"
+import Card from "components/Card"
+import PageContent from "components/PageContent"
 
 const Adventure: NextPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -27,7 +29,16 @@ const Adventure: NextPage = () => {
   }
 
   if (account && chainId !== process.env.chainId) {
-    return <div>not the correct chain id</div>
+    return (
+      <PageContent>
+        <Card className="border border-orange-400">
+          <h3 className="text-xl mb-4 font-bold">Invalid network</h3>
+          <p className="text-lg">
+            You are currently not connected to the dontgetscammed network.
+          </p>
+        </Card>
+      </PageContent>
+    )
   }
 
   if (!account) {

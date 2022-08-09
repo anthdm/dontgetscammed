@@ -15,7 +15,7 @@ interface Props {
 
 const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   // TODO: handle the error
-  const { tx, addBalance, error } = useAddBalance()
+  const { tx, addBalance, error, isLoading } = useAddBalance()
   const [fail, setFail] = useState(false)
   const {
     register,
@@ -78,7 +78,9 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
       <Spacer />
       <div className="flex space-x-5 mt-8">
         <div>
-          <Button onClick={onDontShare}>Dont share</Button>
+          <Button loading={isLoading} onClick={onDontShare}>
+            Dont share
+          </Button>
         </div>
         <div>
           <Button onClick={handleSubmit(onContinue)}>Continue</Button>

@@ -19,10 +19,12 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
   const [isBob, setIsBob] = useState(false)
   const renderButton = isAlice || isBob
   const [noTx, setNoTx] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const onContinue = async () => {
-    console.log("checking tx")
+    setIsLoading(true)
     await checkTxs()
+    setIsLoading(false)
   }
 
   const onContinueNextPage = () => {
@@ -69,7 +71,7 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
           </p>
           <p className="font-bold text-lg text-green-400">Reward: 6 points</p>
           <Spacer />
-          <p className="text-lg">address: {ALICE}</p>
+          <p className="text-xs lg:text-lg">address: {ALICE}</p>
         </Card>
         <Spacer />
         <Card>
@@ -79,11 +81,13 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
           </p>
           <p className="font-bold text-lg text-green-400">Reward: 3 points</p>
           <Spacer />
-          <p className="text-lg">address: {BOB}</p>
+          <p className="text-xs lg:text-lg">address: {BOB}</p>
         </Card>
         {noTx && renderNoTx()}
         <Spacer />
-        <Button onClick={onContinue}>Continue</Button>
+        <Button loading={isLoading} onClick={onContinue}>
+          Continue
+        </Button>
       </>
     )
   }

@@ -6,11 +6,17 @@ interface NavLinkProps {
   children?: React.ReactNode
   name: string
   href: string
+  target?: React.HTMLAttributeAnchorTarget
 }
 
-export const NavLink: React.FC<NavLinkProps> = ({ children, name, href }) => {
+export const NavLink: React.FC<NavLinkProps> = ({
+  children,
+  name,
+  href,
+  target
+}) => {
   return (
-    <Link href={href}>
+    <Link href={href} target={target}>
       <a className="hover:text-blue-300">
         {children}
         {name}
@@ -50,7 +56,11 @@ export const Nav: React.FC<NavProps> = () => {
           <NavLink name="Adventures" href="/adventures" />
           <NavLink name="Leaderboard" href="/leaderboard" />
           <NavLink name="FAQ" href="/faq" />
-          <NavLink name="Feedback" href="/feedback" />
+          <NavLink
+            name="Feedback"
+            href="https://forms.gle/yXM7976bbDZo74xo7"
+            target="_blank"
+          />
         </div>
       </div>
       <div className="hidden lg:block">

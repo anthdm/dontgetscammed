@@ -1,14 +1,16 @@
 import React, { forwardRef } from "react"
+import { BarLoader, CircleLoader, PulseLoader } from "react-spinners"
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   children?: React.ReactNode
   onClick?: (e: any) => void
   className?: string
   isDisabled?: boolean
+  loading?: boolean
 }
 
 const Button = forwardRef<HTMLInputElement, ButtonProps>(
-  ({ children, onClick, className, isDisabled, ...props }, ref) => {
+  ({ loading, children, onClick, className, isDisabled, ...props }, ref) => {
     return (
       <button
         ref={ref as any}
@@ -20,7 +22,12 @@ const Button = forwardRef<HTMLInputElement, ButtonProps>(
         disabled={isDisabled}
         {...(props as any)}
       >
-        {children}
+        {loading && (
+          <>
+            processing <PulseLoader size={8} color="#ffffff" />
+          </>
+        )}
+        {!loading && children}
       </button>
     )
   }

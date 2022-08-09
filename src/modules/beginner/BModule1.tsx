@@ -21,11 +21,11 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
         <Card className="border border-green-300">
           <h3 className="text-xl mb-4 font-bold">Sweet!</h3>
           <p className="text-lg">
-            You are now connected to the{" "}
+            You have now connected your wallet to the{" "}
             <span className="text-blue-400">
               dontgetscammed private network
             </span>{" "}
-            with your MetaMask wallet and ready to start your adventures.
+            and ready to start your adventures.
           </p>
         </Card>
         <Spacer />

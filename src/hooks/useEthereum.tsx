@@ -13,6 +13,7 @@ interface EthereumContext {
   connect?: () => void
   disconnect?: () => void
   chainId?: string
+  walletInstalled?: boolean
 }
 
 const EthereumContext = React.createContext<EthereumContext>({})
@@ -26,6 +27,7 @@ export const EthereumProvider = ({ children }: Props) => {
   const [provider, setProvider] = useState<Web3Provider>()
   const [signer, setSigner] = useState<JsonRpcSigner>()
   const [chainId, setChainId] = useState<string>()
+  const [walletInstalled, setWalletInstalled] = useState(true)
 
   useEffect(() => {
     if (account) {
@@ -38,13 +40,16 @@ export const EthereumProvider = ({ children }: Props) => {
   }, [account])
 
   useEffect(() => {
+    if (!window.ethereum) {
+      setWalletInstalled(false)
+    }
     if (localStorage.getItem("DGSCONNECT")) {
       connect()
     }
   }, [])
 
   const disconnect = async () => {
-    localStorage.clear()
+    localStorage.removeItem("DGSCONNECT")
     setAccount(undefined)
     setProvider(undefined)
   }
@@ -104,7 +109,8 @@ export const EthereumProvider = ({ children }: Props) => {
         provider,
         connect,
         disconnect,
-        chainId
+        chainId,
+        walletInstalled
       }}
     >
       {children}

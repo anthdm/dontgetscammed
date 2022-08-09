@@ -57,9 +57,9 @@ const BModule2: React.FC<Props> = ({ account, nextStep }) => {
           <Card error={true}>
             <h3 className="text-xl mb-4 font-bold">Whoops!</h3>
             <p className="text-lg">
-              The address you entered does not seem to match. Maybe try to open
-              the MetaMask browser extension? Normally, you can find it in the
-              top right corner of your browser.
+              The address you have entered does not seem to match. Maybe try to
+              open the MetaMask browser extension? Typically, you can find it in
+              the top right corner of your browser.
             </p>
           </Card>
           <Spacer />
