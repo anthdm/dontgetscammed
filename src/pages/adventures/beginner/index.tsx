@@ -8,6 +8,7 @@ import BModule5 from "modules/beginner/BModule5"
 import useProgress from "hooks/useProgress"
 import useEthereum from "hooks/useEthereum"
 import ConnectAccount from "components/ConnectAccount"
+import Result from "modules/beginner/Result"
 
 const Adventure: NextPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -25,7 +26,7 @@ const Adventure: NextPage = () => {
     setCurrentStep(currentStep + 1)
   }
 
-  if (account && chainId !== "ddd") {
+  if (account && chainId !== process.env.chainId) {
     return <div>not the correct chain id</div>
   }
 
@@ -40,6 +41,7 @@ const Adventure: NextPage = () => {
       {currentStep === 3 && <BModule3 account={account} nextStep={nextStep} />}
       {currentStep === 4 && <BModule4 account={account} nextStep={nextStep} />}
       {currentStep === 5 && <BModule5 nextStep={nextStep} />}
+      {currentStep === 6 && <Result />}
     </>
   )
 }

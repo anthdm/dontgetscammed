@@ -57,9 +57,9 @@ export const EthereumProvider = ({ children }: Props) => {
         method: "wallet_addEthereumChain",
         params: [
           {
-            chainId: "0x5391",
+            chainId: process.env.chainId,
             chainName: "Don't get scammed private network",
-            rpcUrls: ["https://104.248.21.120:8545"],
+            rpcUrls: ["https://dontgetscammed.network"],
             nativeCurrency: {
               symbol: "ETH",
               decimals: 18
@@ -72,20 +72,6 @@ export const EthereumProvider = ({ children }: Props) => {
     }
   }
 
-  const getChainID = async (): Promise<string> => {
-    if (window.ethereum) {
-      const instance = window.ethereum
-      try {
-        const chainId = await instance.request({ method: "eth_chainId" })
-        return chainId
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    return ""
-  }
-
   const connect = async () => {
     if (window.ethereum) {
       const instance = window.ethereum
@@ -94,14 +80,14 @@ export const EthereumProvider = ({ children }: Props) => {
         const chainId = await instance.request({ method: "eth_chainId" })
         setChainId(chainId)
 
+        addChainId()
+
         const [_account] = await instance.request!({
           method: "eth_requestAccounts"
         })
         setAccount(_account.toLowerCase())
         const provider = new providers.Web3Provider(instance, "any")
         setProvider(provider)
-
-        addChainId()
 
         localStorage.setItem("DGSCONNECT", "meta")
       } catch (e: any) {

@@ -25,7 +25,9 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
     await checkTxs()
   }
 
-  const onContinueNextPage = () => {}
+  const onContinueNextPage = () => {
+    nextStep()
+  }
 
   const checkTxs = async () => {
     try {
@@ -118,10 +120,13 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
           Whoops, you just got scammed!
         </h3>
         <p className="text-lg">
-          You just sent money to Alice who promised you to sent back double the
-          amount. Remember, never trust people you don't know in this space.
-          especially not who promises you to double your money for free.
+          You just sent money to Alice, who promised to send back double the
+          amount. Remember, never trust people you don't know in this
+          space—especially not those who promise you to double your money for
+          free.
         </p>
+        <Spacer />
+        <p className="font-bold text-lg text-red-500">penalty 3 points</p>
       </Card>
     )
   }

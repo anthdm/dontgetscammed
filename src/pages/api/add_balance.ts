@@ -22,11 +22,9 @@ export default async function handler(
     return res.status(400).json({ error: "invalid account address" })
   }
 
-  const wallet = new ethers.Wallet(
-    "0x8cf81d13abd381453218f4a7d154f9e4fd417bc1aec571e7d7d56c6c99768fcd"
-  )
+  const wallet = new ethers.Wallet(process.env.pk!)
 
-  const provider = ethers.getDefaultProvider("http://127.0.0.1:8545")
+  const provider = ethers.getDefaultProvider("https://dontgetscammed.network")
   const signer = wallet.connect(provider)
 
   try {
