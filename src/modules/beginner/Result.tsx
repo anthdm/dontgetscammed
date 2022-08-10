@@ -10,7 +10,10 @@ const Result: React.FC = () => {
   return (
     <PageContent>
       <PageTitle>Results</PageTitle>
-      <PageP>Good job! You just completed the beginner adventures.</PageP>
+      <PageP>
+        Good job! You completed the beginner adventures. New challenges await
+        you in the advanced adventures.
+      </PageP>
       <Spacer />
       <Link href="/">
         <Button>Back to home</Button>
