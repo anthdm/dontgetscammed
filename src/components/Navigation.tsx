@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import ConnectButton from "./ConnectButton"
+import DonateButton from "./DonateButton"
 
 interface NavLinkProps {
   children?: React.ReactNode
@@ -63,7 +64,8 @@ export const Nav: React.FC<NavProps> = () => {
           />
         </div>
       </div>
-      <div className="hidden lg:block">
+      <div className="hidden lg:flex space-x-4">
+        <DonateButton />
         <ConnectButton />
       </div>
     </div>

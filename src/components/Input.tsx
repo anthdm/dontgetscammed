@@ -2,15 +2,16 @@ import React, { forwardRef } from "react"
 
 interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
   placeholder?: string
+  className?: string
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, ...props }, ref) => {
+  ({ placeholder, className, ...props }, ref) => {
     return (
       <input
         ref={ref as any}
         placeholder={placeholder}
-        className="rounded-xl py-4 px-4 w-full outline-none text-white bg-black-dimmed focus:outline-1 focus:outline-bound-border"
+        className={`rounded-xl py-3 px-4 w-full outline-none text-white bg-black-dimmed focus:outline-1 focus:outline-bound-border ${className}`}
         {...(props as any)}
       />
     )

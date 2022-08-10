@@ -1,6 +1,6 @@
 import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
 import { providers } from "ethers"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 
 declare let window: {
   ethereum?: any
@@ -14,6 +14,7 @@ interface EthereumContext {
   disconnect?: () => void
   chainId?: number
   walletInstalled?: boolean
+  switchChain?: (id: number) => Promise<void>
 }
 
 const EthereumContext = React.createContext<EthereumContext>({})
@@ -35,23 +36,27 @@ export const EthereumProvider = ({ children }: Props) => {
       setSigner(signer)
     } else {
       setSigner(undefined)
-      console.log("disconnected")
     }
   }, [account, provider])
-
-  useEffect(() => {
-    if (!window.ethereum) {
-      setWalletInstalled(false)
-    }
-    if (localStorage.getItem("DGSCONNECT")) {
-      connect()
-    }
-  }, [])
 
   const disconnect = async () => {
     localStorage.removeItem("DGSCONNECT")
     setAccount(undefined)
     setProvider(undefined)
+    console.log("disconnected")
+  }
+
+  const switchChain = async (id: number): Promise<void> => {
+    const instance = window.ethereum
+
+    try {
+      await instance.request({
+        method: "Wallet_SwitchEthereumChain",
+        params: [{ chainId: id }]
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const addChainId = async () => {
@@ -77,7 +82,7 @@ export const EthereumProvider = ({ children }: Props) => {
     }
   }
 
-  const connect = async () => {
+  const connect = useCallback(async () => {
     if (window.ethereum) {
       const instance = window.ethereum
 
@@ -105,7 +110,17 @@ export const EthereumProvider = ({ children }: Props) => {
         console.log(e.message)
       }
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    console.log("initialize connection..")
+    if (!window.ethereum) {
+      setWalletInstalled(false)
+    }
+    if (localStorage.getItem("DGSCONNECT")) {
+      connect()
+    }
+  }, [connect])
 
   return (
     <EthereumContext.Provider
@@ -116,7 +131,8 @@ export const EthereumProvider = ({ children }: Props) => {
         connect,
         disconnect,
         chainId,
-        walletInstalled
+        walletInstalled,
+        switchChain
       }}
     >
       {children}
