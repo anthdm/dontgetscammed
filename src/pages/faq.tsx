@@ -1,24 +1,8 @@
+import FaqSection from "components/FaqSection"
 import PageContent from "components/PageContent"
-import PageP from "components/PageP"
 import PageTitle from "components/PageTitle"
-import Spacer from "components/Spacer"
 import type { NextPage } from "next"
 import Link from "next/link"
-
-interface FaqSectionProps {
-  title: string
-  children?: React.ReactNode
-}
-
-const FaqSection: React.FC<FaqSectionProps> = ({ title, children }) => {
-  return (
-    <>
-      <Spacer />
-      <PageP className="font-bold text-blue-400">{title}</PageP>
-      <PageP>{children}</PageP>
-    </>
-  )
-}
 
 const FAQ: NextPage = () => {
   return (
