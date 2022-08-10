@@ -9,9 +9,12 @@ import { ethers } from "ethers"
 import useEthereum from "hooks/useEthereum"
 import type { NextPage } from "next"
 import Link from "next/link"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import Page from "./adventures"
+
+declare let window: {
+  ethereum?: any
+}
 
 const Donate: NextPage = () => {
   const [donateError, setDonateError] = useState<string | null>(null)

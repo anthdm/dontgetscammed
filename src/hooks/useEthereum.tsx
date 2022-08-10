@@ -101,10 +101,15 @@ export const EthereumProvider = ({ children }: Props) => {
 
         localStorage.setItem("DGSCONNECT", "meta")
 
+        console.log("registering callbacks")
         instance.on("chainChanged", (receivedChainId: string | number) => {
           const newChainId = Number(receivedChainId)
           console.log("chain changed to => ", newChainId)
           setChainId(newChainId)
+        })
+        instance.on("accountsChanged", (accounts: string[]) => {
+          const [receivedAccount] = accounts
+          console.log("account changed to => ", receivedAccount)
         })
       } catch (e: any) {
         console.log(e.message)

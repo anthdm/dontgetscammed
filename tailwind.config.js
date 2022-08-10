@@ -16,6 +16,7 @@ module.exports = {
       colors: {
         "black-normal": "#0d1117",
         "black-dimmed": "#161b22",
+        "dgs-border": "#30363d",
         muted: "#8b949e"
       }
     }
