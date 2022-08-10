@@ -23,7 +23,7 @@ const Adventure: NextPage = () => {
     if (progress) {
       setCurrentStep(progress.step)
     }
-  }, [progress])
+  }, [progress, account])
 
   const nextStep = () => {
     saveProgress(account!, currentStep + 1)

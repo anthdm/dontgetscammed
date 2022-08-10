@@ -110,6 +110,7 @@ export const EthereumProvider = ({ children }: Props) => {
         instance.on("accountsChanged", (accounts: string[]) => {
           const [receivedAccount] = accounts
           console.log("account changed to => ", receivedAccount)
+          setAccount(receivedAccount)
         })
       } catch (e: any) {
         console.log(e.message)

@@ -14,10 +14,15 @@ interface State {
 const useProgress = (): UseProgressData => {
   const { account } = useEthereum()
   const [progress, setProgress] = useState<State>({ step: 1 })
+
   const getProgress = (address: string) => {
     try {
       const data = localStorage.getItem(address)
-      setProgress(JSON.parse(data!))
+      if (data) {
+        setProgress(JSON.parse(data))
+      } else {
+        setProgress({ step: 1 })
+      }
     } catch (e: any) {
       console.log(e)
     }
@@ -27,17 +32,6 @@ const useProgress = (): UseProgressData => {
     try {
       const data = {
         step
-      }
-      localStorage.setItem(address, JSON.stringify(data))
-    } catch (e: any) {
-      console.log(e)
-    }
-  }
-
-  const addNewAccount = (address: string) => {
-    try {
-      const data = {
-        step: 1
       }
       localStorage.setItem(address, JSON.stringify(data))
     } catch (e: any) {
