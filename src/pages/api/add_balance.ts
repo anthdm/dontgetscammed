@@ -27,9 +27,11 @@ export default async function handler(
   const signer = wallet.connect(provider)
 
   try {
-    // Check the balance first, if the user already have balance dont add extra.
+    // Check the balance first, if the user already has enough balance dont add extra.
     const balance = await provider.getBalance(address)
-    if (balance.gt(0)) {
+    const maxBalance = ethers.utils.parseEther("0.5")
+
+    if (balance.gt(maxBalance)) {
       return res.status(200).json({ tx: "ok" })
     }
 

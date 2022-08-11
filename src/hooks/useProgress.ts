@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import useEthereum from "./useEthereum"
+import CryptoJs from "crypto-js"
 
 interface UseProgressData {
   saveProgress: (address: string, step: number) => void
@@ -11,7 +12,7 @@ interface State {
   step: number
 }
 
-const useProgress = (): UseProgressData => {
+const useProgress = (secretKey: string): UseProgressData => {
   const { account } = useEthereum()
   const [progress, setProgress] = useState<State>({ step: 1 })
 
@@ -19,7 +20,10 @@ const useProgress = (): UseProgressData => {
     try {
       const data = localStorage.getItem(address)
       if (data) {
-        setProgress(JSON.parse(data))
+        const decData = CryptoJs.AES.decrypt(data, secretKey).toString(
+          CryptoJs.enc.Utf8
+        )
+        setProgress(JSON.parse(decData))
       } else {
         setProgress({ step: 1 })
       }
@@ -33,7 +37,12 @@ const useProgress = (): UseProgressData => {
       const data = {
         step
       }
-      localStorage.setItem(address, JSON.stringify(data))
+      console.log(process.env.SECRET)
+      const encData = CryptoJs.AES.encrypt(
+        JSON.stringify(data),
+        secretKey
+      ).toString()
+      localStorage.setItem(address, encData)
     } catch (e: any) {
       console.log(e)
     }

@@ -51,9 +51,8 @@ const Page: NextPage = () => {
           <div>
             <h3 className="text-xl mb-4 text-orange-400">Advanced</h3>
             <PageP>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              laudantium molestiae sed quas, facere natus doloribus veniam ut
-              veritatis facilis architecto amet rerum. Ratione.
+              Interact with smart contracts and learn about tokens, NFTs, and
+              allowances. Take care; we will do everything to scam you!
             </PageP>
           </div>
           <Spacer />

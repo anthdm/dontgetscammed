@@ -1,4 +1,8 @@
-import type { NextPage } from "next"
+import type {
+  NextPage,
+  GetServerSideProps,
+  InferGetServerSidePropsType
+} from "next"
 import { useEffect, useState } from "react"
 import BModule1 from "modules/beginner/BModule1"
 import BModule2 from "modules/beginner/BModule2"
@@ -13,11 +17,15 @@ import Card from "components/Card"
 import PageContent from "components/PageContent"
 import Spacer from "components/Spacer"
 import Button from "components/Button"
+import BModule6 from "modules/beginner/BModule6"
 
-const Adventure: NextPage = () => {
+export const Adventure: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ data, ...props }) => {
+  const { secretKey } = data
   const [currentStep, setCurrentStep] = useState(1)
   const { account, chainId, connect } = useEthereum()
-  const { progress, saveProgress } = useProgress()
+  const { progress, saveProgress } = useProgress(secretKey)
 
   useEffect(() => {
     if (progress) {
@@ -61,9 +69,20 @@ const Adventure: NextPage = () => {
       {currentStep === 3 && <BModule3 account={account} nextStep={nextStep} />}
       {currentStep === 4 && <BModule4 account={account} nextStep={nextStep} />}
       {currentStep === 5 && <BModule5 nextStep={nextStep} />}
-      {currentStep === 6 && <Result />}
+      {currentStep === 6 && <BModule6 nextStep={nextStep} />}
+      {currentStep === 7 && <Result />}
     </>
   )
 }
 
 export default Adventure
+
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  return {
+    props: {
+      data: {
+        secretKey: process.env.SECRET
+      }
+    }
+  }
+}

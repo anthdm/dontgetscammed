@@ -13,6 +13,7 @@ const BOB = "0x112ba38B875BfE7C6Efb52c20FEAE8E6A9FE43F0"
 interface Props {
   nextStep: () => void
 }
+
 const BModule4: React.FC<Props> = ({ nextStep }) => {
   const { provider, account } = useEthereum()
   const [isAlice, setIsAlice] = useState(false)
