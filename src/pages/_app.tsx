@@ -3,8 +3,18 @@ import type { AppProps } from "next/app"
 import Layout from "components/Layout"
 import { EthereumProvider } from "hooks/useEthereum"
 import { NextSeo } from "next-seo"
+import TagManager from "react-gtm-module"
+import { useEffect } from "react"
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const tagManagerArgs = {
+    gtmId: "G-MDNK0T4LHK"
+  }
+
+  useEffect(() => {
+    TagManager.initialize(tagManagerArgs)
+  }, [])
+
   return (
     <>
       <NextSeo

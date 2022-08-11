@@ -1,11 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useForm } from "react-hook-form"
 import PageContent from "components/PageContent"
 import PageP from "components/PageP"
 import Spacer from "components/Spacer"
 import Input from "components/Input"
 import Button from "components/Button"
-import Card from "components/Card"
+import Card, { CardP, CardTitle } from "components/Card"
 import PageTitle from "components/PageTitle"
 
 interface Props {
@@ -55,12 +55,12 @@ const BModule2: React.FC<Props> = ({ account, nextStep }) => {
       {errors.address && (
         <>
           <Card error={true}>
-            <h3 className="text-xl mb-4 font-bold">Whoops!</h3>
-            <p className="text-lg">
+            <CardTitle>Whoops!</CardTitle>
+            <CardP>
               The address you have entered does not seem to match. Maybe try to
               open the MetaMask browser extension? Typically, you can find it in
               the top right corner of your browser.
-            </p>
+            </CardP>
           </Card>
           <Spacer />
         </>

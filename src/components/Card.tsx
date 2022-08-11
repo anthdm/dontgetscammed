@@ -1,5 +1,23 @@
 import React from "react"
 
+interface CardTitleProps {
+  children?: React.ReactNode
+}
+
+export const CardTitle: React.FC<CardTitleProps> = ({ children }) => {
+  return (
+    <h3 className="text-lg lg:text-xl mb-4 font-bold text-white">{children}</h3>
+  )
+}
+
+interface CardPProps {
+  children?: React.ReactNode
+}
+
+export const CardP: React.FC<CardPProps> = ({ children }) => {
+  return <h3 className="lg:text-lg text-white">{children}</h3>
+}
+
 interface ErrorCardProps {
   title?: string
   msg: string

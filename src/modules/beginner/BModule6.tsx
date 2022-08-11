@@ -1,5 +1,5 @@
 import Button from "components/Button"
-import Card from "components/Card"
+import Card, { CardP, CardTitle } from "components/Card"
 import PageContent from "components/PageContent"
 import PageP, { P } from "components/PageP"
 import PageTitle from "components/PageTitle"
@@ -48,12 +48,11 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
     return (
       <>
         <Card className="border border-green-400">
-          <P customClass="text-blue-100 text-xl">Well done!</P>
-          <Spacer />
-          <P customClass="text-blue-50">
+          <CardTitle>Well done!</CardTitle>
+          <CardP>
             You noticed a potential scam. Always look what you are signing and
             never trust any application, even not popular ones.
-          </P>
+          </CardP>
         </Card>
         <Spacer />
         {continueButton()}
@@ -65,11 +64,14 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
     return (
       <>
         <Card error>
-          <P customClass="text-blue-100 text-bold text-xl">
-            You just got scammed!
-          </P>
+          <CardTitle>You just got scammed!</CardTitle>
+          <CardP>
+            We just took 0.2 ETH instead of the 0.1 ETH we told you. Always
+            verify your transaction in your wallet before accepting (signing)
+            it.
+          </CardP>
           <Spacer />
-          <P customClass="text-blue-50">You did not..</P>
+          <p className="font-bold text-lg text-red-500">penalty 3 points</p>
         </Card>
         <Spacer />
         {continueButton()}
@@ -79,10 +81,11 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
 
   return (
     <PageContent>
-      <PageTitle>Sending Ether 2</PageTitle>
+      <PageTitle>Signing transactions</PageTitle>
       <PageP>
-        Applications you visit can also send funds for you. If you approve the
-        transaction they made for you ofcourse.
+        You do not always have to transfer currency manually. Most applications
+        will transfer your funds if you sign the transaction they made for you.
+        Give it a shot.
       </PageP>
       <Spacer />
       <P customClass="font-bold mb-2" primary>

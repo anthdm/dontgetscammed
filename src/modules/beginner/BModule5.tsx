@@ -1,5 +1,5 @@
 import Button from "components/Button"
-import Card from "components/Card"
+import Card, { CardP, CardTitle, ErrorCard } from "components/Card"
 import PageContent from "components/PageContent"
 import PageP from "components/PageP"
 import PageTitle from "components/PageTitle"
@@ -67,22 +67,26 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
     return (
       <>
         <Card>
-          <h3 className="text-xl mb-4 font-bold">Alice</h3>
-          <p className="text-lg mb-2">
+          <CardTitle>Alice</CardTitle>
+          <CardP>
             When Alice receives currency on her account, she will sent back
             DOUBLE the amount. Go grab your chance to make a quick profit.
+          </CardP>
+          <p className="font-bold text-lg text-green-400 mt-2">
+            Reward: 6 points
           </p>
-          <p className="font-bold text-lg text-green-400">Reward: 6 points</p>
           <Spacer />
           <p className="text-xs lg:text-lg">address: {ALICE}</p>
         </Card>
         <Spacer />
         <Card>
-          <h3 className="text-xl mb-4 font-bold">Bob</h3>
-          <p className="text-lg mb-2">
+          <CardTitle>Bob</CardTitle>
+          <CardP>
             Bob will be very thankfull when he receives your donation!
+          </CardP>
+          <p className="font-bold text-lg text-green-400 mt-2">
+            Reward: 3 points
           </p>
-          <p className="font-bold text-lg text-green-400">Reward: 3 points</p>
           <Spacer />
           <p className="text-xs lg:text-lg">address: {BOB}</p>
         </Card>
@@ -99,8 +103,8 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
     return (
       <>
         <Card className="border-green-300 border">
-          <h3 className="text-xl mb-4 font-bold">Good job!</h3>
-          <p className="text-lg">Bob thanks you for your generous donation!</p>
+          <CardTitle>Good job!</CardTitle>
+          <CardP>Bob thanks you for your generous donation!</CardP>
         </Card>
       </>
     )
@@ -108,30 +112,31 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
 
   const renderNoTx = () => {
     return (
-      <Card className="mt-8 border border-red-500">
-        <h3 className="text-xl mb-4 font-bold">
-          Could not find any transaction to Bob or Alice.
-        </h3>
-        <p className="text-lg">
-          It could be that your transaction is still in progress. Try again in 1
-          minute or so.
-        </p>
-      </Card>
+      <ErrorCard
+        msg="It could be that your transaction is till in progress. Try again later."
+        title="Could not find any transaction to Bob or Alice"
+      />
+      // <Card className="mt-8 border border-red-500">
+      //   <h3 className="text-xl mb-4 font-bold">
+      //     Could not find any transaction to Bob or Alice.
+      //   </h3>
+      //   <p className="text-lg">
+      //     It could be that your transaction is still in progress. Try again in 1
+      //     minute or so.
+      //   </p>
+      // </Card>
     )
   }
 
   const renderAlice = () => {
     return (
       <Card className="border border-red-500 mt-8">
-        <h3 className="text-xl mb-4 font-bold">
-          Whoops, you just got scammed!
-        </h3>
-        <p className="text-lg">
-          You just sent money to Alice, who promised to send back double the
+        <CardTitle>Whoops, you just got scammed!</CardTitle>
+        <CardP>
+          You transfered money to Alice, who promised to send back double the
           amount. Remember, never trust people you don&apos;t know in this
-          space—especially not those who promise you to double your money for
-          free.
-        </p>
+          space—especially not those who promise you to give you money for free.
+        </CardP>
         <Spacer />
         <p className="font-bold text-lg text-red-500">penalty 3 points</p>
       </Card>

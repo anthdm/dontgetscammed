@@ -1,7 +1,7 @@
 import Button from "components/Button"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
-import Card from "components/Card"
+import Card, { CardP, CardTitle } from "components/Card"
 import PageP from "components/PageP"
 import PageContent from "components/PageContent"
 import useEthereum from "hooks/useEthereum"
@@ -19,27 +19,18 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
     return (
       <>
         <Card className="border border-green-300">
-          <h3 className="text-xl mb-4 font-bold">Sweet!</h3>
-          <p className="text-lg">
+          <CardTitle>Sweet!</CardTitle>
+          <CardP>
             You have now connected your wallet to the{" "}
             <span className="text-blue-400">
               dontgetscammed private network
             </span>{" "}
             and ready to start your adventures.
-          </p>
+          </CardP>
         </Card>
         <Spacer />
         <Button onClick={nextStep}>Continue</Button>
       </>
-    )
-  }
-
-  const renderMetaMaskNotInstalled = () => {
-    return (
-      <Card>
-        <h3 className="text-xl mb-4 font-bold">MetaMask not installed</h3>
-        <p className="text-lg">Please install Metamask to continue.</p>
-      </Card>
     )
   }
 
@@ -52,7 +43,6 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
         your bread and butter to interact with the blockchain network.
       </PageP>
       <Spacer />
-      {/* {!walletInstalled && renderMetaMaskNotInstalled()} */}
       {!account && <ConnectAccount />}
       {account && renderMetaMaskConnected()}
     </PageContent>

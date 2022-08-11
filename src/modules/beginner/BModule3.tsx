@@ -1,5 +1,5 @@
 import Button from "components/Button"
-import Card from "components/Card"
+import Card, { CardP, CardTitle } from "components/Card"
 import PageTitle from "components/PageTitle"
 import Spacer from "components/Spacer"
 import { useEffect, useState } from "react"
@@ -64,15 +64,13 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
       )}
       {fail && (
         <Card className="border border-red-500 mt-8">
-          <h3 className="text-xl mb-4 font-bold">
-            Whoops, you just got scammed!
-          </h3>
-          <p className="text-lg">
+          <CardTitle>Whoops, you just got scammed!</CardTitle>
+          <CardP>
             <span className="font-bold">Never</span> share your secret phrase
             with anyone! Nobody will ever ask you for your secret phrase unless
             the person is willing to scam you! You can click don&apos;t share
             now, but never make this mistake again. Pinky swear!
-          </p>
+          </CardP>
         </Card>
       )}
       <Spacer />

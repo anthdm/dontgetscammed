@@ -64,10 +64,8 @@ const Page: NextPage = () => {
           <div>
             <h3 className="text-xl mb-4 text-red-600">Expert</h3>
             <PageP>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Voluptatibus est repudiandae voluptates reprehenderit, itaque
-              unde, laudantium molestiae sed quas, facere natus doloribus veniam
-              ut veritatis facilis architecto amet rerum. Ratione.
+              So, you think you are a crypto expert? I will do everything to
+              drain your wallet! Or will you drain mine?
             </PageP>
           </div>
           <Spacer />
