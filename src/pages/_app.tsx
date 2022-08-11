@@ -3,20 +3,31 @@ import type { AppProps } from "next/app"
 import Layout from "components/Layout"
 import { EthereumProvider } from "hooks/useEthereum"
 import { NextSeo } from "next-seo"
-import TagManager from "react-gtm-module"
-import { useEffect } from "react"
+import Script from "next/script"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const tagManagerArgs = {
     gtmId: "G-MDNK0T4LHK"
   }
 
-  useEffect(() => {
-    TagManager.initialize(tagManagerArgs)
-  }, [])
-
   return (
     <>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-MDNK0T4LHK"
+      ></Script>
+      <Script
+        id="gtm"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-MDNK0T4LHK');
+            `
+        }}
+      ></Script>
       <NextSeo
         title="Don't get scammed!"
         description="An educational and interactive platform interacting with cryptocurrencies"
