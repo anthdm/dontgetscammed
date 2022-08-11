@@ -4,12 +4,17 @@ import Layout from "components/Layout"
 import { EthereumProvider } from "hooks/useEthereum"
 import { NextSeo } from "next-seo"
 import Script from "next/script"
-import Head from "next/head"
+import GoogleTagManager from "react-gtm-module"
+import { useEffect } from "react"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const tagManagerArgs = {
-    gtmId: "G-MDNK0T4LHK"
+    gtmId: "GTM-PLNMKHP"
   }
+
+  useEffect(() => {
+    GoogleTagManager.initialize(tagManagerArgs)
+  }, [])
 
   return (
     <>
@@ -17,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         src="https://www.googletagmanager.com/gtag/js?id=G-MDNK0T4LHK"
         strategy="afterInteractive"
       />
-      <Script id="gtm" strategy="afterInteractive">
+      <Script id="ga" strategy="afterInteractive">
         {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());

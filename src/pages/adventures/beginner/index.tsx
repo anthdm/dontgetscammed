@@ -58,6 +58,12 @@ export const Adventure: NextPage<
     )
   }
 
+  const doSomething = () => {
+    return (<div>
+      <p>this will never be the same</p>
+    </div>)
+  }
+
   if (!account) {
     return <ConnectAccount />
   }
