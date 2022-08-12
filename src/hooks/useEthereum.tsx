@@ -1,6 +1,7 @@
 import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
 import { providers } from "ethers"
 import React, { useCallback, useContext, useEffect, useState } from "react"
+import { emitEvent } from "utils/util"
 
 declare let window: {
   ethereum?: any
@@ -100,6 +101,7 @@ export const EthereumProvider = ({ children }: Props) => {
         setProvider(provider)
 
         localStorage.setItem("DGSCONNECT", "meta")
+        emitEvent(`connect_${_account.toLowerCase()}`)
 
         console.log("registering callbacks")
         instance.on("chainChanged", (receivedChainId: string | number) => {

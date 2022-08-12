@@ -4,7 +4,6 @@ import Layout from "components/Layout"
 import { EthereumProvider } from "hooks/useEthereum"
 import { NextSeo } from "next-seo"
 import Script from "next/script"
-import { useEffect } from "react"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -11,6 +11,7 @@ import type { NextPage } from "next"
 import Link from "next/link"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { emitEvent } from "utils/util"
 
 declare let window: {
   ethereum?: any
@@ -27,7 +28,7 @@ const Donate: NextPage = () => {
     formState: { errors }
   } = useForm({
     defaultValues: {
-      amount: "0.1"
+      amount: ethers.utils.parseEther("0.1")
     }
   })
 
@@ -47,12 +48,15 @@ const Donate: NextPage = () => {
 
     try {
       setLoading(true)
+      const _amount = ethers.utils.parseEther(amount)
 
       await signer?.sendTransaction({
         to: "0x7d8b83DB9Ca98b6db63cFcf93547F5B7FbcD346b",
         from: await signer.getAddress(),
-        value: ethers.utils.parseEther(amount)
+        value: _amount
       })
+
+      emitEvent(`dontate_${_amount}`)
 
       setSuccess(true)
     } catch (e: any) {
