@@ -11,14 +11,17 @@ import { useEffect, useState } from "react"
 import { emitSaEvent } from "utils/util"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule6: React.FC<Props> = ({ nextStep }) => {
+  const reward = 4
+  const penalty = -2
   const { signer, account } = useEthereum()
   const [success, setSuccess] = useState(false)
   const [fail, setFail] = useState(false)
   const { addBalance } = useAddBalance()
+  const [points, setPoints] = useState(0)
 
   useEffect(() => {
     addBalance(account!)
@@ -32,8 +35,10 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
         value: ethers.utils.parseEther("0.2")
       })
       setFail(true)
+      setPoints(penalty)
     } catch (e: any) {
       if (e.code === 4001) {
+        setPoints(reward)
         setSuccess(true)
       } else {
         console.log(e)
@@ -43,7 +48,7 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
 
   const onContinue = () => {
     emitSaEvent("beginner_complete")
-    nextStep()
+    nextStep(points)
   }
 
   const continueButton = () => {
@@ -77,7 +82,9 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
             it.
           </CardP>
           <Spacer />
-          <p className="font-bold text-lg text-red-500">penalty 3 points</p>
+          <p className="font-bold text-lg text-red-500">
+            penalty {penalty} points
+          </p>
         </Card>
         <Spacer />
         {continueButton()}
@@ -98,7 +105,9 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
         Task: send 0.1 ETH by clicking the button below and approve the
         transaction in your wallet
       </P>
-      <PageP className="font-bold text-green-400">Reward: 4 points</PageP>
+      <PageP className="font-bold text-green-400">
+        Reward: {reward} points
+      </PageP>
       <Spacer />
       {!success && !fail && (
         <Button onClick={onTransfer}>Transfer 0.1 ETH</Button>

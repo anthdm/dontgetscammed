@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import PageContent from "components/PageContent"
 import PageP from "components/PageP"
@@ -10,10 +10,11 @@ import PageTitle from "components/PageTitle"
 import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule2: React.FC<Props> = ({ nextStep }) => {
+  const reward = 1
   const { account } = useEthereum()
   const {
     register,
@@ -26,7 +27,7 @@ const BModule2: React.FC<Props> = ({ nextStep }) => {
   }
 
   const onContinue = (data: any): void => {
-    nextStep()
+    nextStep(reward)
   }
 
   return (

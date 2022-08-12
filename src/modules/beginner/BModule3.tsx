@@ -10,10 +10,13 @@ import useAddBalance from "hooks/useAddBalance"
 import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule3: React.FC<Props> = ({ nextStep }) => {
+  const reward = 2
+  const penalty = -2
+  const [points, setPoints] = useState(0)
   const { account } = useEthereum()
   // TODO: handle the error
   const { tx, addBalance, error, isLoading } = useAddBalance()
@@ -26,16 +29,18 @@ const BModule3: React.FC<Props> = ({ nextStep }) => {
 
   useEffect(() => {
     if (tx) {
-      nextStep()
+      nextStep(points)
     }
   }, [tx])
 
   const onDontShare = () => {
+    setPoints(reward)
     console.log("adding balance")
     addBalance(account!)
   }
 
   const onContinue = () => {
+    setPoints(penalty)
     setFail(true)
   }
 
@@ -52,7 +57,9 @@ const BModule3: React.FC<Props> = ({ nextStep }) => {
       <p className="font-bold text-lg text-blue-500 mb-2">
         Task: enter your secret recovery phrase in the input field below
       </p>
-      <p className="font-bold text-lg text-green-400">Reward: 2 points</p>
+      <p className="font-bold text-lg text-green-400">
+        Reward: {reward} points
+      </p>
       <Spacer />
       <div className="">
         <textarea

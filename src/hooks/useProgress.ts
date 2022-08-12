@@ -3,18 +3,19 @@ import useEthereum from "./useEthereum"
 import CryptoJs from "crypto-js"
 
 interface UseProgressData {
-  saveProgress: (address: string, step: number) => void
+  saveProgress: (address: string, step: number, points: number) => void
   getProgress: (address: string) => void
   progress: State
 }
 
 interface State {
   step: number
+  points: number
 }
 
 const useProgress = (secretKey: string): UseProgressData => {
   const { account } = useEthereum()
-  const [progress, setProgress] = useState<State>({ step: 1 })
+  const [progress, setProgress] = useState<State>({ step: 1, points: 0 })
 
   const getProgress = (address: string) => {
     try {
@@ -25,17 +26,18 @@ const useProgress = (secretKey: string): UseProgressData => {
         )
         setProgress(JSON.parse(decData))
       } else {
-        setProgress({ step: 1 })
+        setProgress({ step: 1, points: 0 })
       }
     } catch (e: any) {
       console.log(e)
     }
   }
 
-  const saveProgress = (address: string, step: number) => {
+  const saveProgress = (address: string, step: number, points: number) => {
     try {
       const data = {
-        step
+        step,
+        points
       }
       console.log(process.env.SECRET)
       const encData = CryptoJs.AES.encrypt(

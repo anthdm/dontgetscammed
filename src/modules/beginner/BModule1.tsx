@@ -9,15 +9,16 @@ import ConnectAccount from "components/ConnectAccount"
 import { emitSaEvent } from "utils/util"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule1: React.FC<Props> = ({ nextStep }) => {
+  const reward = 1
   const { account } = useEthereum()
 
   const onContinue = () => {
     emitSaEvent("new_account")
-    nextStep()
+    nextStep(reward)
   }
 
   const renderMetaMaskConnected = () => {

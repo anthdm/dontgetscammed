@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form"
 import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule3: React.FC<Props> = ({ nextStep }) => {
+  const reward = 1
   const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
   const { account, provider } = useEthereum()
   const {
@@ -33,7 +34,7 @@ const BModule3: React.FC<Props> = ({ nextStep }) => {
       const balanceConverted = Number(balance).toFixed(1)
 
       if (amount === balanceConverted) {
-        nextStep()
+        nextStep(reward)
       } else {
         setInvalidBalance(true)
       }
@@ -55,7 +56,7 @@ const BModule3: React.FC<Props> = ({ nextStep }) => {
         Task: check the balance of your account and enter it in the input field
         below.
       </p>
-      <p className="font-bold text-lg text-green-400">Reward: 1 point</p>
+      <p className="font-bold text-lg text-green-400">Reward: {reward} point</p>
       <Spacer />
       <div className="w-full">
         <Input

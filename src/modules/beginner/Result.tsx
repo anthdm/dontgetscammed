@@ -6,7 +6,11 @@ import Spacer from "components/Spacer"
 import Link from "next/link"
 import React from "react"
 
-const Result: React.FC = () => {
+interface Props {
+  points: number
+}
+
+const Result: React.FC<Props> = ({ points }) => {
   return (
     <PageContent>
       <PageTitle>Results</PageTitle>
@@ -14,6 +18,10 @@ const Result: React.FC = () => {
         Good job! You completed the beginner adventures. New challenges await
         you in the advanced adventures.
       </PageP>
+      <Spacer />
+      <p className="text-xl text-blue-500 font-bold">
+        Your score: {points} / 10
+      </p>
       <Spacer />
       <Link href="/">
         <Button>Back to home</Button>

@@ -127,7 +127,7 @@ const Donate: NextPage = () => {
           </div>
         </div>
         <Button
-          isDisabled={!isEthNetwork}
+          isDisabled={!isEthNetwork || !account}
           loading={loading}
           onClick={handleSubmit(onDonate)}
         >

@@ -22,19 +22,23 @@ import BModule6 from "modules/beginner/BModule6"
 export const Adventure: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data, ...props }) => {
+  const [points, setPoints] = useState(0)
   const { secretKey } = data
   const [currentStep, setCurrentStep] = useState(1)
   const { account, chainId, connect } = useEthereum()
-  const { progress, saveProgress } = useProgress(secretKey)
+  const { progress, saveProgress, getProgress } = useProgress(secretKey)
 
   useEffect(() => {
     if (progress) {
-      setCurrentStep(progress.step)
+      const { step, points } = progress
+      setCurrentStep(step)
+      setPoints(points)
     }
   }, [progress, account])
 
-  const nextStep = () => {
-    saveProgress(account!, currentStep + 1)
+  const nextStep = (_points: number) => {
+    setPoints(points + _points)
+    saveProgress(account!, currentStep + 1, points + _points)
     setCurrentStep(currentStep + 1)
   }
 
@@ -70,7 +74,7 @@ export const Adventure: NextPage<
       {currentStep === 4 && <BModule4 nextStep={nextStep} />}
       {currentStep === 5 && <BModule5 nextStep={nextStep} />}
       {currentStep === 6 && <BModule6 nextStep={nextStep} />}
-      {currentStep === 7 && <Result />}
+      {currentStep === 7 && <Result points={points} />}
     </>
   )
 }

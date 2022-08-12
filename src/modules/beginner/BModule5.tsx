@@ -11,10 +11,13 @@ const ALICE = "0x212F9787A4f26d5aE5948B089dAde5BCA1182404"
 const BOB = "0x112ba38B875BfE7C6Efb52c20FEAE8E6A9FE43F0"
 
 interface Props {
-  nextStep: () => void
+  nextStep: (points: number) => void
 }
 
 const BModule4: React.FC<Props> = ({ nextStep }) => {
+  const reward = 2
+  const penalty = -2
+  const [points, setPoints] = useState(0)
   const { provider, account } = useEthereum()
   const [isAlice, setIsAlice] = useState(false)
   const [isBob, setIsBob] = useState(false)
@@ -29,7 +32,7 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
   }
 
   const onContinueNextPage = () => {
-    nextStep()
+    nextStep(points)
   }
 
   // TODO: A better aproach is here to store the blocknumber from when this address is first seen
@@ -52,7 +55,9 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
           if (tx.to === ALICE) {
             setIsAlice(true)
             setNoTx(false)
+            setPoints(penalty)
           } else if (tx.to === BOB) {
+            setPoints(reward)
             setIsBob(true)
             setNoTx(false)
           }
@@ -85,7 +90,7 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
             Bob will be very thankfull when he receives your donation!
           </CardP>
           <p className="font-bold text-lg text-green-400 mt-2">
-            Reward: 3 points
+            Reward: {reward} points
           </p>
           <Spacer />
           <p className="text-xs lg:text-lg">address: {BOB}</p>
@@ -138,7 +143,9 @@ const BModule4: React.FC<Props> = ({ nextStep }) => {
           space—especially not those who promise you to give you money for free.
         </CardP>
         <Spacer />
-        <p className="font-bold text-lg text-red-500">penalty 3 points</p>
+        <p className="font-bold text-lg text-red-500">
+          penalty {penalty} points
+        </p>
       </Card>
     )
   }
