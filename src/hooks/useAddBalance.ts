@@ -13,13 +13,15 @@ const useAddBalance = (): AddBalanceData => {
   const [tx, setTx] = useState(null)
   const [isLoading, setIsloading] = useState(false)
 
+  const endpoint = "/api/add_balance"
+
   const addBalance = async (address: string): Promise<void> => {
     setError(null)
     setIsloading(true)
     try {
       const {
         data: { tx }
-      } = await axios.post("http://localhost:3000/api/add_balance", { address })
+      } = await axios.post(endpoint, { address })
       setTx(tx)
     } catch (e: any) {
       setError(e.message)
