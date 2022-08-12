@@ -6,6 +6,7 @@ import PageP from "components/PageP"
 import PageContent from "components/PageContent"
 import useEthereum from "hooks/useEthereum"
 import ConnectAccount from "components/ConnectAccount"
+import { emitEvent } from "utils/util"
 
 interface Props {
   nextStep: () => void
@@ -13,6 +14,11 @@ interface Props {
 
 const BModule1: React.FC<Props> = ({ nextStep }) => {
   const { account } = useEthereum()
+
+  const onContinue = () => {
+    emitEvent(`new_account_${account}`)
+    nextStep()
+  }
 
   const renderMetaMaskConnected = () => {
     return (
@@ -28,7 +34,7 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
           </CardP>
         </Card>
         <Spacer />
-        <Button onClick={nextStep}>Continue</Button>
+        <Button onClick={onContinue}>Continue</Button>
       </>
     )
   }
