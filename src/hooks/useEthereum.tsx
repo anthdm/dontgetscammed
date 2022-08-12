@@ -59,6 +59,7 @@ export const EthereumProvider = ({ children }: Props) => {
     }
   }
 
+  // Adds the dgs chain configuration to MetaMask.
   const addChainId = async () => {
     const instance = window.ethereum
 

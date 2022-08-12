@@ -29,7 +29,7 @@ const Donate: NextPage = () => {
     formState: { errors }
   } = useForm({
     defaultValues: {
-      amount: "0.1"
+      amount: "0.01"
     }
   })
 
@@ -48,6 +48,7 @@ const Donate: NextPage = () => {
     const { amount } = data
 
     try {
+      setDonateError(null)
       setLoading(true)
       const _amount = ethers.utils.parseEther(amount)
 
@@ -84,6 +85,7 @@ const Donate: NextPage = () => {
   return (
     <PageContent>
       <PageTitle>Donate</PageTitle>
+      {account}
       <PageP>
         If you like what I&apos;m building consider supporting the project. The
         money will mostly be used to cover the operational costs. Note: this
