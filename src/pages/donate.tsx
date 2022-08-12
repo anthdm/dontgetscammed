@@ -11,7 +11,7 @@ import type { NextPage } from "next"
 import Link from "next/link"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { emitEvent } from "utils/util"
+import { emitSaEvent } from "utils/util"
 
 declare let window: {
   ethereum?: any
@@ -56,7 +56,7 @@ const Donate: NextPage = () => {
         value: _amount
       })
 
-      emitEvent(`dontate_${_amount}`)
+      emitSaEvent(`dontate_${_amount}`)
 
       setSuccess(true)
     } catch (e: any) {
