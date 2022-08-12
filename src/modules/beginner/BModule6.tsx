@@ -8,6 +8,7 @@ import { ethers } from "ethers"
 import useAddBalance from "hooks/useAddBalance"
 import useEthereum from "hooks/useEthereum"
 import { useEffect, useState } from "react"
+import { emitSaEvent } from "utils/util"
 
 interface Props {
   nextStep: () => void
@@ -40,8 +41,13 @@ const BModule6: React.FC<Props> = ({ nextStep }) => {
     }
   }
 
+  const onContinue = () => {
+    emitSaEvent("beginner_complete")
+    nextStep()
+  }
+
   const continueButton = () => {
-    return <Button onClick={() => nextStep()}>Continue</Button>
+    return <Button onClick={onContinue}>Continue</Button>
   }
 
   const renderSuccess = () => {

@@ -16,7 +16,7 @@ const BModule1: React.FC<Props> = ({ nextStep }) => {
   const { account } = useEthereum()
 
   const onContinue = () => {
-    emitSaEvent(`new_account_${account}`)
+    emitSaEvent("new_account")
     nextStep()
   }
 

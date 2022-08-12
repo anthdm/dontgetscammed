@@ -39,7 +39,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ children, className, error }) => {
-  let cname = `p-6 rounded-lg w-full bg-black-dimmed ${className}`
+  let cname = `p-6 rounded-lg w-full bg-black-dimmed overflow-clip ${className}`
   if (error) {
     cname = `border border-red-400 ${cname}`
   }

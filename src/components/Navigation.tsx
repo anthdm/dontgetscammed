@@ -17,8 +17,8 @@ export const NavLink: React.FC<NavLinkProps> = ({
   target
 }) => {
   return (
-    <Link href={href} target={target}>
-      <a className="hover:text-blue-300">
+    <Link href={href}>
+      <a className="hover:text-blue-300" target={target}>
         {children}
         {name}
       </a>
@@ -33,11 +33,11 @@ export const Nav: React.FC<NavProps> = () => {
     <div className="container mx-auto py-10 flex justify-between items-end text-white">
       <div className="flex space-x-20 items-end">
         {" "}
-        <div className="font-bold text-2xl lg:text-4xl text-white">
+        <div className="font-bold text-1xl lg:text-4xl text-white">
           <Link href="/">
             <a>
               dontgetscammed
-              <span className="text-orange-300 text-sm"> Beta</span>
+              <span className="text-orange-300 text-xs md:text-sm"> Beta</span>
             </a>
           </Link>
         </div>

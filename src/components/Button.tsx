@@ -23,9 +23,10 @@ const Button = forwardRef<HTMLInputElement, ButtonProps>(
         {...(props as any)}
       >
         {loading && (
-          <>
-            processing <PulseLoader size={8} color="#ffffff" />
-          </>
+          <div className="flex space-x-3 items-center">
+            <p>processing</p>
+            <PulseLoader size={8} color="#ffffff" />
+          </div>
         )}
         {!loading && children}
       </button>
