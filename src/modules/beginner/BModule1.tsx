@@ -8,7 +8,6 @@ import useEthereum from "hooks/useEthereum"
 import ConnectAccount from "components/ConnectAccount"
 
 interface Props {
-  account: string
   nextStep: () => void
 }
 

@@ -11,13 +11,12 @@ import { useForm } from "react-hook-form"
 import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  account: string
   nextStep: () => void
 }
 
-const BModule3: React.FC<Props> = ({ nextStep, account }) => {
+const BModule3: React.FC<Props> = ({ nextStep }) => {
   const [invalidBalance, setInvalidBalance] = useState<boolean | null>(null)
-  const { provider } = useEthereum()
+  const { account, provider } = useEthereum()
   const {
     register,
     handleSubmit,
@@ -27,7 +26,7 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
   // TODO: handle the error here
   const onSubmitBalance = async (data: any): Promise<void> => {
     try {
-      const result = await provider?.getBalance(account)
+      const result = await provider?.getBalance(account!)
       const _balance = ethers.utils.formatUnits(result!)
       const amount = (+_balance).toFixed(1)
       const { balance } = data

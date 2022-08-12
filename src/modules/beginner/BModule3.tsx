@@ -7,13 +7,14 @@ import { useForm } from "react-hook-form"
 import PageP from "components/PageP"
 import PageContent from "components/PageContent"
 import useAddBalance from "hooks/useAddBalance"
+import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  account: string
   nextStep: () => void
 }
 
-const BModule3: React.FC<Props> = ({ nextStep, account }) => {
+const BModule3: React.FC<Props> = ({ nextStep }) => {
+  const { account } = useEthereum()
   // TODO: handle the error
   const { tx, addBalance, error, isLoading } = useAddBalance()
   const [fail, setFail] = useState(false)
@@ -31,7 +32,7 @@ const BModule3: React.FC<Props> = ({ nextStep, account }) => {
 
   const onDontShare = () => {
     console.log("adding balance")
-    addBalance(account)
+    addBalance(account!)
   }
 
   const onContinue = () => {

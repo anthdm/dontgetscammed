@@ -7,13 +7,14 @@ import Input from "components/Input"
 import Button from "components/Button"
 import Card, { CardP, CardTitle } from "components/Card"
 import PageTitle from "components/PageTitle"
+import useEthereum from "hooks/useEthereum"
 
 interface Props {
-  account: string
   nextStep: () => void
 }
 
-const BModule2: React.FC<Props> = ({ account, nextStep }) => {
+const BModule2: React.FC<Props> = ({ nextStep }) => {
+  const { account } = useEthereum()
   const {
     register,
     handleSubmit,

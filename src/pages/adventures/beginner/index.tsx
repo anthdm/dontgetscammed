@@ -59,9 +59,11 @@ export const Adventure: NextPage<
   }
 
   const doSomething = () => {
-    return (<div>
-      <p>this will never be the same</p>
-    </div>)
+    return (
+      <div>
+        <p>this will never be the same</p>
+      </div>
+    )
   }
 
   if (!account) {
@@ -70,10 +72,10 @@ export const Adventure: NextPage<
 
   return (
     <>
-      {currentStep === 1 && <BModule1 account={account} nextStep={nextStep} />}
-      {currentStep === 2 && <BModule2 account={account} nextStep={nextStep} />}
-      {currentStep === 3 && <BModule3 account={account} nextStep={nextStep} />}
-      {currentStep === 4 && <BModule4 account={account} nextStep={nextStep} />}
+      {currentStep === 1 && <BModule1 nextStep={nextStep} />}
+      {currentStep === 2 && <BModule2 nextStep={nextStep} />}
+      {currentStep === 3 && <BModule3 nextStep={nextStep} />}
+      {currentStep === 4 && <BModule4 nextStep={nextStep} />}
       {currentStep === 5 && <BModule5 nextStep={nextStep} />}
       {currentStep === 6 && <BModule6 nextStep={nextStep} />}
       {currentStep === 7 && <Result />}
