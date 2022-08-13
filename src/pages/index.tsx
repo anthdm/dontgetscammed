@@ -62,7 +62,7 @@ const Home: NextPage = () => {
               network="twitter"
             />
             <SocialIcon
-              url="https://github.com/anthdm"
+              url="https://github.com/anthdm/dontgetscammed"
               target="_blank"
               network="github"
               bgColor="#fff"
