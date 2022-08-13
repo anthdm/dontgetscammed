@@ -52,7 +52,6 @@ const Home: NextPage = () => {
         <PageP>- Launched test version</PageP>
         <PageP>- ETA advanced adventures and leader board September</PageP>
       </PageContent>
-
       <footer className="flex flex-col items-center mt-20">
         <div className="border-t border-gray-700 w-full py-10 flex flex-col space-y-6 lg:space-y-0 lg:flex-row text-muted text-sm justify-between items-center">
           <div>© 2022 dontgetscammed by @anthdm</div>
