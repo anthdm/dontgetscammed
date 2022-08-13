@@ -13,12 +13,11 @@ interface Props {
 }
 
 const BModule1: React.FC<Props> = ({ nextStep }) => {
-  const reward = 1
   const { account } = useEthereum()
 
   const onContinue = () => {
     emitSaEvent("new_account")
-    nextStep(reward)
+    nextStep(0)
   }
 
   const renderMetaMaskConnected = () => {
