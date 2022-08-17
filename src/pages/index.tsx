@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         <h1 className="text-3xl lg:text-5xl font-bold tracking-wide mb-6">
           An <span className="text-blue-500">educational</span> and{" "}
           <span className="text-blue-500">interactive</span> platform that
-          prepares you to not get scammed
+          teaches you NOT to get scammed
         </h1>
         <p className="lg:text-xl font-bold text-muted tracking-wide">
           Enter the world of cryptocurrencies in an isolated environment where
